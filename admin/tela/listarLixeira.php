@@ -1,5 +1,4 @@
 <?php
-session_start();
 if (!isset($_SESSION['typeUser']) || $_SESSION['typeUser'] !== 'admin-master') {
     echo "<script>alert('Você não tem permissão para acessar esta página! Apenas administradores-master podem acessar.');</script>";
     header("Location: index.php?tela=home");

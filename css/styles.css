@@ -1,8 +1,8 @@
 @import url('https://fonts.cdnfonts.com/css/made-outer-sans-alt');
 
-body {
+body, html {
     font-family: 'Arial', sans-serif;
-    background-color: #f3f3f3;
+    background-color: #fff;
     min-height: 100vh;
     margin: 0;
     padding: 0;
@@ -35,25 +35,4 @@ header {
 
 .btn-primary:hover {
     background-color: #0069d9;
-}
-.full-height{
-    min-height: 100vh;
-}
-.img-cover{
-    background-image: url('../img/imgForm.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-.input{
-    width: 100%;
-    margin-bottom: 10px;
-    outline: none;
-}
-.icons>.btn{
-    width: 40px;
-    height: 40px;
-    color: #fff;
-    padding: 0px;
-    line-height: 0.8rem;
 }

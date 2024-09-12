@@ -130,36 +130,49 @@ class criaPaginacao extends MinhaConexao //Indicar o arquivo que será herdado
 
 	/**********************************************************************************************************/
 
-	public function geraNumeros()
-	{
+public function geraNumeros()
+{
+    echo "<ul class='pagination justify-content-center'>";
 
-		if ($this->ida > 1) {
-			echo "<li class='mx-2'><a href=\"$this->fileName&pg=$this->pagAnt\" class='link link-underline link-underline-opacity-0 link-underline-opacity-100-hover' title=\"$this->pagAnt\">Anterior</a>\n<li>";
-		}
-		if ($this->temp >= $this->maxLink) {
-			if ($this->numeroPaginas > $this->maxLink) {
-				$n_maxlnk = $this->temp + 6;
-				$this->maxLink = $n_maxlnk;
-				$n_start = $this->maxLink - 6;
-				$this->lnk_impressos = $n_start;
-			}
-		}
-		//mostra os números das páginas
-		while (($this->lnk_impressos < $this->numeroPaginas) and ($this->lnk_impressos < $this->maxLink)) {
-			$this->lnk_impressos++;
-			// Mostra a página atual sem o link
-			if ($this->pagAtual == $this->lnk_impressos) {
-				echo "<li class='mx-2'>$this->lnk_impressos \n</li>";
-				//mostra os números das 
-			} else {
-				echo "<li class='mx-1'><a href=\"$this->fileName&pg=$this->lnk_impressos\" class='link link-underline link-underline-opacity-0 link-underline-opacity-100-hover' title=\"$this->lnk_impressos\">$this->lnk_impressos</a></li>\n";
-			}
-		}
-		// mostra o link PRÓXIMO >>
-		if ($this->proxPag <= $this->numeroPaginas) {
-			echo "<li class='mx-2'><a href=\"$this->fileName&pg=$this->proxPag\" class='link link-underline link-underline-opacity-0 link-underline-opacity-100-hover' title=\"$this->proxPag\">Próximo</a></li>";
-		}
-	}
+    // Botão "Anterior"
+    if ($this->ida > 1) {
+        echo "<li class='page-item'><a href=\"$this->fileName&pg=$this->pagAnt\" class='page-link rounded-circle' title=\"$this->pagAnt\">Anterior</a></li>";
+    } else {
+        echo "<li class='page-item disabled'><a href='#' class='page-link rounded-circle mx-3' title='Anterior'>Anterior</a></li>";
+    }
+
+    // Números das páginas
+    if ($this->temp >= $this->maxLink) {
+        if ($this->numeroPaginas > $this->maxLink) {
+            $n_maxlnk = $this->temp + 6;
+            $this->maxLink = $n_maxlnk;
+            $n_start = $this->maxLink - 6;
+            $this->lnk_impressos = $n_start;
+        }
+    }
+
+    // Mostra os números das páginas
+    while (($this->lnk_impressos < $this->numeroPaginas) and ($this->lnk_impressos < $this->maxLink)) {
+        $this->lnk_impressos++;
+
+        // Página atual
+        if ($this->pagAtual == $this->lnk_impressos) {
+            echo "<li class='page-item active' aria-current='page'><span class='page-link rounded-circle'>$this->lnk_impressos</span></li>";
+        } else {
+            echo "<li class='page-item'><a href=\"$this->fileName&pg=$this->lnk_impressos\" class='page-link rounded-circle mx-3' title=\"$this->lnk_impressos\">$this->lnk_impressos</a></li>";
+        }
+    }
+
+    // Botão "Próximo"
+    if ($this->proxPag <= $this->numeroPaginas) {
+        echo "<li class='page-item'><a href=\"$this->fileName&pg=$this->proxPag\" class='page-link rounded-circle' title=\"$this->proxPag\">Próximo</a></li>";
+    } else {
+        echo "<li class='page-item disabled'><a href='#' class='page-link rounded-circle mx-3' title='Próximo'>Próximo</a></li>";
+    }
+
+    echo "</ul>";
+}
+
 	public function getTime()
 	{
 		list($sec, $usec) = explode(" ", microtime());

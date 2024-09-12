@@ -37,7 +37,13 @@ class MostrarProduto extends criaPaginacao {
                         <div class='mt-auto'>
                             <h2 class='text-start text-success mt-5 fw-semibold'>R$ " . $resultado['priceProduct'] . "</h2>    
                             <div class='text-start text-dark mt-1 fw-semibold'>Quantidade Disponível: " . $resultado['quantProduct'] . "</div>    
-                            <div class='btn btn-dark fw-semibold form-control w-75'>Comprar</div>
+
+                            <!-- Formulário de adicionar ao carrinho -->
+                            <form action='index.php?tela=viewProduct' method='post'>
+                                <input type='hidden' name='idProduto' value='" . $this->idProduct . "'>
+                                <input type='hidden' name='quantidade' value='1'>
+                                <button type='submit' class='btn btn-dark fw-semibold w-75'>Adicionar ao Carrinho</button>
+                            </form>
                         </div>
                     </div>
                 ";

@@ -55,12 +55,3 @@
         </div>
     </div>
 </main>
-
-<!-- Formulário de adição ao carrinho -->
-<?php if (isset($_GET['id'])): ?>
-<form action="index.php?tela=viewProduct" method="post">
-    <input type="hidden" name="idProduto" value="<?php echo (int)$_GET['id']; ?>">
-    <input type="hidden" name="quantidade" value="1"> <!-- Ajuste conforme necessário -->
-    <button type="submit" class="btn btn-dark fw-semibold">Adicionar ao Carrinho</button>
-</form>
-<?php endif; ?>

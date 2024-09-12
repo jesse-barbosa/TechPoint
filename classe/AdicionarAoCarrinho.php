@@ -1,5 +1,5 @@
 <?php
-include_once("MinhaConexao");
+include_once("MinhaConexao.php");
 
 class AdicionarAoCarrinho extends MinhaConexao {
     public function __construct() {
@@ -38,9 +38,7 @@ class AdicionarAoCarrinho extends MinhaConexao {
             if (!$stmt->execute()) {
                 throw new Exception("Erro na execução da consulta: " . $this->conectar->error);
             }
-
-            // Redireciona após adicionar ao carrinho
-            header('Location: ../');
+            echo "<script>alert('Produto adicionado ao carrinho!');window.location.href = 'index.php?tela=home'</script>";
             exit();
 
         } catch (Exception $e) {

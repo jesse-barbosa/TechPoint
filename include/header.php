@@ -14,7 +14,6 @@
                 <div class="col-2 text-end">
                 <a class="" href="index.php?tela=viewCart"><i class="bi bi-cart text-black fs-2 me-1"></i></a>
                     <?php
-                        session_start();
                         include_once("../classe/MostrarIconeUsuario.php");
                         $icons = new MostrarIconeUsuario();
                         $icons->mostrarIcone($_SESSION['idUser']);

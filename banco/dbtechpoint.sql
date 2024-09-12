@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Tempo de geração: 12/09/2024 às 17:06
+-- Host: 127.0.0.1
+-- Tempo de geração: 13/09/2024 às 01:58
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -58,9 +58,17 @@ CREATE TABLE `cart` (
   `idCart` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `quantProducts` int(11) NOT NULL,
-  `added_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `quantProducts` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+
+--
+-- Despejando dados para a tabela `cart`
+--
+
+INSERT INTO `cart` (`idCart`, `user_id`, `product_id`, `quantProducts`) VALUES
+(8, 6, 4, 1),
+(9, 6, 1, 1),
+(10, 6, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -142,9 +150,19 @@ INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact
 
 CREATE TABLE `images` (
   `idImage` int(11) NOT NULL,
+  `nameImage` char(30) NOT NULL,
+  `typeImage` char(10) NOT NULL,
   `urlImage` char(100) NOT NULL,
-  `typeImage` char(10) NOT NULL
+  `statusImage` char(10) NOT NULL DEFAULT 'ATIVO',
+  `deletedImage` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+
+--
+-- Despejando dados para a tabela `images`
+--
+
+INSERT INTO `images` (`idImage`, `nameImage`, `typeImage`, `urlImage`, `statusImage`, `deletedImage`) VALUES
+(1, 'Primeiro Banner', 'banners', '/TechPoint/img/banners/banner1.jpg', 'ATIVO', 0);
 
 -- --------------------------------------------------------
 
@@ -229,7 +247,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `iconUser`, `statusUser`, `typeUser`, `deletedUser`) VALUES
-(4, 'Jesse Barbosa', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'admin-master', 0),
+(4, 'Jesse Barbosa', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'admin', 0),
 (5, 'admin-master', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'admin-master', 0),
 (6, 'Jesse', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'default', 0);
 
@@ -301,7 +319,7 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT de tabela `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `categories`
@@ -319,7 +337,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT de tabela `images`
 --
 ALTER TABLE `images`
-  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `products`
@@ -338,17 +356,6 @@ ALTER TABLE `subcategories`
 --
 ALTER TABLE `users`
   MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- Restrições para tabelas despejadas
---
-
---
--- Restrições para tabelas `cart`
---
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`idUser`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`idProduct`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

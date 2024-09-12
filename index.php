@@ -10,13 +10,12 @@
     <link href="css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="container-fluid h-100">
-        <div class="row full-height justify-content-center align-items-center">
-            <div class="col-md-6 col-12 full-height img-cover d-none d-md-block"></div>
+    <div class="container-fluid vh-100">
+        <div class="row vh-100 justify-content-center align-items-center">
             <div class="col-6 justify-content-center">
                 <div class="card border-0">
                     <div class="card-body">
-                        <h2 class="display-5 mb-5 text-black text-start ms-5">Faça Login</h2>
+                        <h2 class="display-5 mb-5 text-black text-center ms-5 font-monospace">Faça Login</h2>
                         <form action="index.php" class="px-5" method="post">
                             <input type="hidden" name="idForm" value="formLogin">
                             <div class="form-floating mb-3">
@@ -28,7 +27,7 @@
                                 <label for="senha">Senha</label>
                             </div>
                             <div class="mt-4 d-flex justify-content-between align-items-center">
-                                <button type="submit" name="enviar" class="btn btn-dark form-control py-2 fw-bold">Entrar</button>
+                                <button type="submit" name="enviar" class="btn btn-dark form-control py-3 fw-bold">Entrar</button>
                             </div>
                             <?php
                                 if(empty($_POST["nome"]) || empty($_POST["senha"])){

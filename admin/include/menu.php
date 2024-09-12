@@ -18,7 +18,11 @@
     </li></a>
     <a class="d-none d-md-inline-block link-underline link-underline-opacity-0 link-light link-opacity-75-hover"
             href="?tela=cadListarBanners"><li class="nav-item bg-secondary py-2 ps-2">
-        <i class="bi bi-image"></i> Banners
+        <i class="bi bi-card-image"></i> Banners
+    </li></a>
+        <a class="d-none d-md-inline-block link-underline link-underline-opacity-0 link-light link-opacity-75-hover"
+            href="?tela=cadListarImagens"><li class="nav-item bg-secondary py-2 ps-2">
+        <i class="bi bi-images"></i> Imagens
     </li></a>
     <!-- Intens para relatório -->
     <div class="d-none d-md-inline-block text-start my-2 text-light fs-5 text-center lead">Relatórios</div>

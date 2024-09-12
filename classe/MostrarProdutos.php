@@ -50,10 +50,10 @@ class MostrarProdutos extends criaPaginacao {
             if ($dados > 0) {
                 while ($resultado = mysqli_fetch_assoc($query)) {
                     echo "
-                        <div class='col-6 col-md-4 col-lg-4 mb-3'>
+                        <div class='col-4 col-md-4 col-lg-3 mb-3'>
                             <a href='index.php?tela=viewProduct&id=" . $resultado['idProduct'] . "' class='link link-underline link-underline-opacity-0'>
                                 <div class='card shadow-none p-2 h-100'>
-                                    <img src='" . $resultado['imageProduct'] . "' class='p-5 card-img-top' height='320' alt='Foto Produto'>
+                                    <img src='" . $resultado['imageProduct'] . "' class='p-1 card-img-top' height='220' alt='Foto Produto'>
                                     <div class='card-body'>
                                         <h5 class='card-title fw-bold'>" . $resultado['nameProduct'] . "</h5>    
                                         <h5 class='card-title text-success fw-bold'>R$" . $resultado['priceProduct'] . "</h5>    
