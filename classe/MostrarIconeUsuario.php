@@ -14,8 +14,8 @@ class MostrarIconeUsuario extends MinhaConexao
             $query = $this->execSql($sql);
 
             if ($query) {
-                $result = $query->fetch_assoc(); // Corrigido: buscar o resultado como array associativo
-                echo "<img src='".$result['iconUser']."' height='50' />";
+                $result = $query->fetch_assoc();
+                echo "<img src='".$result['iconUser']."' height='40' class='mb-3' />";
             } else {
                 return '';
             }

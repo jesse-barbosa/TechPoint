@@ -10,7 +10,7 @@
                 <h4 class="text-start mt-4 ms-2 fw-bold">Filtro</h4>
                 <hr />
                 <h5 class="text-start ms-2">Filtrar por categoria</h5>
-                <form action="index.php" class="p-2" method="GET">
+                <form action="index.php?tela=home" class="p-2" method="GET">
                 <select name="categoria" class="form-select mb-3">
                     <option value="">Geral</option>
                     <?php
@@ -32,7 +32,7 @@
                         $numPagina = isset($_GET['pg']) ? (int)$_GET['pg'] : 1;
                         $filtroCategoria = isset($_GET['categoria']) ? $_GET['categoria'] : '';
                         $produtos->setNumPagina($numPagina);
-                        $produtos->setUrl("index.php?categoria=" . urlencode($filtroCategoria));
+                        $produtos->setUrl("index.php?tela=home?categoria=" . urlencode($filtroCategoria));
                         $produtos->setSessao('');
                         $produtos->setFiltroCategoria($filtroCategoria);
                         $produtos->mostrarProdutos();

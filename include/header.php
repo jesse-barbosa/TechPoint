@@ -1,33 +1,23 @@
 <header class="bg-white">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row ps-5 pe-4 align-items-center">
                 <div class="col-2">
-                    <a href="index.php?tela=home" class="link fs-3 fw-semibold text-black link-underline link-underline-opacity-0">TechPoint</a>
+                    <a href="index.php?tela=home" class="logo link fs-3 fw-bold text-black link-underline link-underline-opacity-0">TechPoint</a>
                 </div>
                 <div class="col-8">
-                    <nav class="nav">
-                    <div class="nav-item dropdown">
-                            <a class="nav-link link text-secondary bg-blue dropdown-toggle fs-5 fw-semibold" href="#" id="produtosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Produtos
-                            </a>
-                            <ul class="dropdown-menu p-2" aria-labelledby="produtosDropdown">
-                                <li><a class="dropdown-item" href="index.php">Geral</a></li>
-                                <?php
-                                    include_once("../classe/MostrarCategorias.php");
-                                    $categorias = new MostrarCategoriasDropdown();
-                                    $categorias->mostrarCategoriasDropdown();
-                                ?>
-                            </ul>
-                        </div>
-                        <a class="nav-link link text-secondary fs-5 fw-semibold" href="about.php">Sobre</a>
-                        <a class="nav-link link text-secondary fs-5 fw-semibold" href="contact.php">Contato</a>
+                    <nav class="nav ps-4">
+                        <a class="nav-link link link-dark opacity-50 fs-5 mx-2" href="index.php?tela=home">INÍCIO</a>
+                        <a class="nav-link link link-dark opacity-50 fs-5 mx-2" href="index.php?tela=about">SOBRE</a>
+                        <a class="nav-link link link-dark opacity-50 fs-5 mx-2" href="index.php?tela=contact">CONTATO</a>
                     </nav>
                 </div>
-                <div class="col-2">
+                <div class="col-2 text-end">
+                <a class="" href="index.php?tela=viewCart"><i class="bi bi-cart text-black fs-2 me-1"></i></a>
                     <?php
+                        session_start();
                         include_once("../classe/MostrarIconeUsuario.php");
                         $icons = new MostrarIconeUsuario();
-                        $icons->mostrarIcone(4);
+                        $icons->mostrarIcone($_SESSION['idUser']);
                     ?>
                 </div>
             </div>

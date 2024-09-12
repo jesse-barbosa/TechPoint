@@ -15,6 +15,18 @@
     <div class="row bg-white">
         <?php
             include_once("../classe/MostrarProduto.php");
+            include_once("../classe/AdicionarAoCarrinho.php");
+
+            // Processa o formulário de adição ao carrinho
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProduto'])) {
+                $idProduto = isset($_POST['idProduto']) ? (int)$_POST['idProduto'] : 0;
+                $quantidade = isset($_POST['quantidade']) ? (int)$_POST['quantidade'] : 1;
+
+                $adicionar = new AdicionarAoCarrinho();
+                $adicionar->adicionarProduto($idProduto, $quantidade);
+            }
+
+            // Exibe o produto
             $produto = new MostrarProduto();
             if (isset($_GET['id'])) {
                 $produto->setIdProduct((int)$_GET['id']);
@@ -43,3 +55,12 @@
         </div>
     </div>
 </main>
+
+<!-- Formulário de adição ao carrinho -->
+<?php if (isset($_GET['id'])): ?>
+<form action="index.php?tela=viewProduct" method="post">
+    <input type="hidden" name="idProduto" value="<?php echo (int)$_GET['id']; ?>">
+    <input type="hidden" name="quantidade" value="1"> <!-- Ajuste conforme necessário -->
+    <button type="submit" class="btn btn-dark fw-semibold">Adicionar ao Carrinho</button>
+</form>
+<?php endif; ?>

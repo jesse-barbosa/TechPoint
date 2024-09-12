@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/made-outer-sans-alt');
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f3f3f3;
@@ -8,6 +10,13 @@ body {
 
 header {
     padding: 10px 0;
+}
+
+.logo {
+    font-family: 'MADE Outer Sans', sans-serif;
+}
+.link {
+    font-weight: 700 !important;
 }
 .card {
     border: none;
@@ -27,7 +36,24 @@ header {
 .btn-primary:hover {
     background-color: #0069d9;
 }
-
-footer {
+.full-height{
+    min-height: 100vh;
+}
+.img-cover{
+    background-image: url('../img/imgForm.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.input{
+    width: 100%;
+    margin-bottom: 10px;
+    outline: none;
+}
+.icons>.btn{
+    width: 40px;
+    height: 40px;
     color: #fff;
+    padding: 0px;
+    line-height: 0.8rem;
 }

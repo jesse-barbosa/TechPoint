@@ -19,7 +19,7 @@ class MostrarCategoriasDropdown extends Minhaconexao {
                 foreach ($resultado as $categoria) {
                     $id = $categoria['idCategory']; // Supondo que 'id' seja a coluna que armazena o ID da categoria
                     $nome = htmlspecialchars($categoria['nameCategory']);
-                    echo "<li class='fw-lighter'><a href='index.php?categoria=" . urlencode($id) . "' class='dropdown-item'>" . $nome . "</a></li>";
+                    echo "<li class='fw-lighter'><a href='index.php?tela=home?categoria=" . urlencode($id) . "' class='dropdown-item'>" . $nome . "</a></li>";
                 }
             } else {
                 echo "<li class='fw-lighter'>Nenhum dado encontrado.</li>";

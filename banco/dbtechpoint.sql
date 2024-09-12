@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 12/09/2024 às 01:50
+-- Host: localhost
+-- Tempo de geração: 12/09/2024 às 17:06
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -30,22 +30,37 @@ SET time_zone = "+00:00";
 CREATE TABLE `banners` (
   `idBanner` int(11) NOT NULL,
   `urlBanner` char(60) NOT NULL,
+  `linkBanner` char(100) NOT NULL DEFAULT 'index.php?tela=home',
   `statusBanner` char(10) NOT NULL DEFAULT 'ATIVO',
   `deletedBanner` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Despejando dados para a tabela `banners`
 --
 
-INSERT INTO `banners` (`idBanner`, `urlBanner`, `statusBanner`, `deletedBanner`) VALUES
-(7, '/TechPoint/img/banners/banner1.jpg', 'ATIVO', 1),
-(9, '/TechPoint/img/banners/banner2.jpg', 'ATIVO', 0),
-(11, '/TechPoint/img/banners/banner3.jpg', 'ATIVO', 0),
-(12, '/TechPoint/img/banners/banner1.jpg', 'ATIVO', 0),
-(13, '/TechPoint/img/banners/banner1.jpg', 'ATIVO', 1),
-(14, '/TechPoint/img/banners/banner1.jpg', 'ATIVO', 1),
-(15, '/TechPoint/img/banners/banner3.jpg', 'ATIVO', 1);
+INSERT INTO `banners` (`idBanner`, `urlBanner`, `linkBanner`, `statusBanner`, `deletedBanner`) VALUES
+(7, '/TechPoint/img/banners/banner1.jpg', '', 'ATIVO', 1),
+(9, '/TechPoint/img/banners/banner2.jpg', '', 'ATIVO', 0),
+(11, '/TechPoint/img/banners/banner3.jpg', '', 'ATIVO', 0),
+(12, '/TechPoint/img/banners/banner1.jpg', '', 'ATIVO', 0),
+(13, '/TechPoint/img/banners/banner1.jpg', '', 'ATIVO', 1),
+(14, '/TechPoint/img/banners/banner1.jpg', '', 'ATIVO', 1),
+(15, '/TechPoint/img/banners/banner3.jpg', '', 'ATIVO', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `cart`
+--
+
+CREATE TABLE `cart` (
+  `idCart` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantProducts` int(11) NOT NULL,
+  `added_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -59,7 +74,7 @@ CREATE TABLE `categories` (
   `descCategory` char(200) DEFAULT NULL,
   `statusCategory` char(10) NOT NULL DEFAULT 'ATIVO',
   `deletedCategory` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Despejando dados para a tabela `categories`
@@ -91,7 +106,7 @@ CREATE TABLE `contacts` (
   `subjectContact` char(50) DEFAULT NULL,
   `messageContact` varchar(500) DEFAULT NULL,
   `deletedContact` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabela para salvar mensagens dos usuários.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci COMMENT='Tabela para salvar mensagens dos usuários.';
 
 --
 -- Despejando dados para a tabela `contacts`
@@ -122,6 +137,18 @@ INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `images`
+--
+
+CREATE TABLE `images` (
+  `idImage` int(11) NOT NULL,
+  `urlImage` char(100) NOT NULL,
+  `typeImage` char(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `products`
 --
 
@@ -137,7 +164,7 @@ CREATE TABLE `products` (
   `idSubCategory` int(11) DEFAULT 0,
   `statusProduct` char(10) DEFAULT 'ATIVO',
   `deletedProduct` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Despejando dados para a tabela `products`
@@ -163,7 +190,7 @@ CREATE TABLE `subcategories` (
   `descSubCategory` varchar(100) DEFAULT NULL,
   `statusSubCategory` char(10) NOT NULL DEFAULT 'ATIVO',
   `deletedSubCategory` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Despejando dados para a tabela `subcategories`
@@ -195,7 +222,7 @@ CREATE TABLE `users` (
   `statusUser` char(10) NOT NULL DEFAULT 'ATIVO',
   `typeUser` char(12) NOT NULL DEFAULT 'default',
   `deletedUser` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Despejando dados para a tabela `users`
@@ -217,6 +244,14 @@ ALTER TABLE `banners`
   ADD PRIMARY KEY (`idBanner`);
 
 --
+-- Índices de tabela `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`idCart`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Índices de tabela `categories`
 --
 ALTER TABLE `categories`
@@ -227,6 +262,12 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`idContact`);
+
+--
+-- Índices de tabela `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`idImage`);
 
 --
 -- Índices de tabela `products`
@@ -257,6 +298,12 @@ ALTER TABLE `banners`
   MODIFY `idBanner` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT de tabela `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de tabela `categories`
 --
 ALTER TABLE `categories`
@@ -267,6 +314,12 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `contacts`
   MODIFY `idContact` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de tabela `images`
+--
+ALTER TABLE `images`
+  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `products`
@@ -285,6 +338,17 @@ ALTER TABLE `subcategories`
 --
 ALTER TABLE `users`
   MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`idUser`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`idProduct`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
