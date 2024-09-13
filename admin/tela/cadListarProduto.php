@@ -1,32 +1,44 @@
 <?php
-// Editar
 include_once("../classe/AlterarProduto.php");
 include_once("../classe/UploadImagem.php");
+// Adicionar Produto
+include_once("../classe/AdicionarProduto.php");
 
+if (isset($_POST['enviar'])) {
+    $nome = $_POST['nomeProduto'];
+    $descricao = $_POST['descricaoProduto'];
+    $quantidade = $_POST['quantidadeProduto'];
+    $preco = $_POST['precoProduto'];
+    $categoria = $_POST['categoriaProduto'];
+    $subcategoria = $_POST['subcategoriaProduto'];
+    $situacao = $_POST['situacaoProduto'];
+
+    // Obter id da imagem selecionada
+    $idImage = isset($_POST['idImage']) ? $_POST['idImage'] : null;
+
+    $adicionarProduto = new AdicionarProduto();
+    $adicionarProduto->adicionarProduto($nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $idImage);
+}
+
+// Editar Produto
 if (isset($_POST['editar'])) {
     $idProduto = $_POST['idProduto'];
-    $nome = $_POST['nome'];
-    $descricao = $_POST['descricao'];
-    $quantidade = $_POST['quantidade'];
-    $preco = $_POST['preco'];
-    $categoria = $_POST['categoria'];
-    $subcategoria = $_POST['subcategoria'];
-    $situacao = $_POST['situacao'];
+    $nome = $_POST['nomeProduto'];
+    $descricao = $_POST['descricaoProduto'];
+    $quantidade = $_POST['quantidadeProduto'];
+    $preco = $_POST['precoProduto'];
+    $categoria = $_POST['categoriaProduto'];
+    $subcategoria = $_POST['subcategoriaProduto'];
+    $situacao = $_POST['situacaoProduto'];
 
-    $caminhoImagem = '';
+    // Obter id da imagem selecionada
+     $idImage = $_POST['idImage'];
 
-    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-        $imagem = $_FILES['imagem'];
-        
-        $upload = new UploadImagem();
-        $upload->upload($imagem, 'products');
-        $caminhoImagem = $upload->getNovoDiretorio();
-    }
     $produto = new AlterarProduto();
-    $produto->alterarProduto($idProduto, $nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $caminhoImagem);
-    echo "<script>window.location.href = 'index.php?tela=cadListarProduto';</script>";
+    $produto->alterarProduto($idProduto, $nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $idImage);
 }
-// Apagar
+
+// Apagar Produto
 include_once("../classe/ApagarProduto.php");
 
 if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idProduto'])) {
@@ -34,6 +46,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
     $apagarProduto = new ApagarProduto();
     $apagarProduto->apagarProduto($idProduto);
 }
+
 ?>
 
 <!-- Cadastro de dados -->
@@ -66,18 +79,22 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
                                     </div>
                                     <!-- Seleção da Imagem -->
                                     <div class="mb-3 text-start">
-                                        <label for="idImage" class="form-label">Selecione a Imagem:</label>
-                                        <select name="idImage" id="idImage" class="form-select" required>
+                                        <label for="editIdImage" class="form-label">Selecione a Imagem:</label>
+                                        <select name="idImage" id="editIdImage" class="form-select" required>
                                             <option value="" disabled selected>Escolha uma imagem</option>
                                             <?php
-                                                include_once("../classe/ListarImagens.php");
-                                                $listarImagens = new ListarImagens();
-                                                $imagens = $listarImagens->listarImagens();
-                                                foreach ($imagens as $imagem) {
-                                                    echo "<option value='" . htmlspecialchars($imagem['idImage']) . "'>" . htmlspecialchars($imagem['nameImage']) . "</option>";
-                                                }
+                                            include_once("../classe/ListarImagens.php");
+                                            $listarImagens = new ListarImagens();
+                                            $imagens = $listarImagens->listarImagens();
+                                            foreach ($imagens as $imagem) {
+                                                echo "<option value='" . htmlspecialchars($imagem['idImage']) . "' data-url='" . htmlspecialchars($imagem['urlImage']) . "'>" . htmlspecialchars($imagem['nameImage']) . "</option>";
+                                            }
                                             ?>
                                         </select>
+                                    </div>
+                                    <!-- Preview da Imagem Selecionada -->
+                                    <div class="mb-3 text-start">
+                                        <img id="editImagemPreview" src="" class="img-fluid" alt="Preview da Imagem Selecionada">
                                     </div>
                                     <!-- Descrição do Produto -->
                                     <div class="mb-3 text-start">
@@ -136,11 +153,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
                                         <label for="situacaoProduto" class="form-label">Situação do Produto:</label>
                                         <select name="situacaoProduto" id="situacaoProduto" class="form-select" required>
                                             <option value="" disabled selected>Escolha a situação</option>
-                                            <option value="ativo">Ativo</option>
-                                            <option value="inativo">Inativo</option>
+                                            <option value="ATIVO">Ativo</option>
+                                            <option value="INATIVO">Inativo</option>
                                         </select>
                                     </div>
-
                                     <!-- Preview da Imagem -->
                                     <div class="mb-3 text-start">
                                         <img id="imagemPreview" src="" class="img-fluid" alt="Preview da Imagem Selecionada">
@@ -195,50 +211,49 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
                 <h5 class="modal-title" id="editProductModalLabel">Editar Produto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" id="editIdProduto" name="idProduto">
-
+                    <!-- Nome do Produto -->
+                    <div class="mb-3 text-start">
+                        <label for="editNomeProduto" class="form-label">Nome do Produto:</label>
+                        <input type="text" name="nomeProduto" id="editNomeProduto" class="form-control" required>
+                    </div>
                     <!-- Seleção da Imagem -->
                     <div class="mb-3 text-start">
                         <label for="editIdImage" class="form-label">Selecione a Imagem:</label>
                         <select name="idImage" id="editIdImage" class="form-select" required>
                             <option value="" disabled selected>Escolha uma imagem</option>
                             <?php
-                                include_once("../classe/ListarImagens.php");
-                                $listarImagens = new ListarImagens();
-                                $imagens = $listarImagens->listarImagens();
-                                foreach ($imagens as $imagem) {
-                                    echo "<option value='" . htmlspecialchars($imagem['idImage']) . "' data-url='" . htmlspecialchars($imagem['urlImage']) . "'>" . htmlspecialchars($imagem['nameImage']) . "</option>";
-                                }
+                            include_once("../classe/ListarImagens.php");
+                            $listarImagens = new ListarImagens();
+                            $imagens = $listarImagens->listarImagens();
+                            foreach ($imagens as $imagem) {
+                                echo "<option value='" . htmlspecialchars($imagem['idImage']) . "' data-url='" . htmlspecialchars($imagem['urlImage']) . "'>" . htmlspecialchars($imagem['nameImage']) . "</option>";
+                            }
                             ?>
                         </select>
                     </div>
-
-                    <!-- Nome do Produto -->
+                    <!-- Preview da Imagem Selecionada -->
+                    <!-- Preview da Imagem -->
                     <div class="mb-3 text-start">
-                        <label for="editNomeProduto" class="form-label">Nome do Produto:</label>
-                        <input type="text" name="nomeProduto" id="editNomeProduto" class="form-control" required>
+                        <img id="imagemPreview" src="" class="img-fluid" alt="Preview da Imagem Selecionada">
                     </div>
-
                     <!-- Descrição do Produto -->
                     <div class="mb-3 text-start">
                         <label for="editDescricaoProduto" class="form-label">Descrição do Produto:</label>
                         <textarea name="descricaoProduto" id="editDescricaoProduto" class="form-control" rows="3" required></textarea>
                     </div>
-
                     <!-- Quantidade do Produto -->
                     <div class="mb-3 text-start">
                         <label for="editQuantidadeProduto" class="form-label">Quantidade do Produto:</label>
                         <input type="number" name="quantidadeProduto" id="editQuantidadeProduto" class="form-control" required>
                     </div>
-
                     <!-- Preço do Produto -->
                     <div class="mb-3 text-start">
                         <label for="editPrecoProduto" class="form-label">Preço do Produto:</label>
                         <input type="number" name="precoProduto" id="editPrecoProduto" class="form-control" step="0.01" required>
                     </div>
-
                     <!-- Categoria do Produto -->
                     <div class="mb-3 text-start">
                         <label for="editCategoriaProduto" class="form-label">Categoria do Produto:</label>
@@ -249,12 +264,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
                                 $listarCategorias = new ListarCategorias();
                                 $categorias = $listarCategorias->listarCategorias();
                                 foreach ($categorias as $categoria) {
-                                    echo "<option value='" . htmlspecialchars($categoria['idCategoria']) . "'>" . htmlspecialchars($categoria['nomeCategoria']) . "</option>";
+                                    echo "<option value='" . htmlspecialchars($categoria['idCategory']) . "'>" . htmlspecialchars($categoria['nameCategory']) . "</option>";
                                 }
                             ?>
                         </select>
                     </div>
-
                     <!-- Subcategoria do Produto -->
                     <div class="mb-3 text-start">
                         <label for="editSubcategoriaProduto" class="form-label">Subcategoria do Produto:</label>
@@ -265,12 +279,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
                                 $listarSubcategorias = new ListarSubcategorias();
                                 $subcategorias = $listarSubcategorias->listarSubcategorias();
                                 foreach ($subcategorias as $subcategoria) {
-                                    echo "<option value='" . htmlspecialchars($subcategoria['idSubcategoria']) . "'>" . htmlspecialchars($subcategoria['nomeSubcategoria']) . "</option>";
+                                    echo "<option value='" . htmlspecialchars($subcategoria['idSubCategory']) . "'>" . htmlspecialchars($subcategoria['nameSubCategory']) . "</option>";
                                 }
                             ?>
                         </select>
                     </div>
-
                     <!-- Situação do Produto -->
                     <div class="mb-3 text-start">
                         <label for="editSituacaoProduto" class="form-label">Situação do Produto:</label>
@@ -279,11 +292,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
                             <option value="ativo">Ativo</option>
                             <option value="inativo">Inativo</option>
                         </select>
-                    </div>
-
-                    <!-- Preview da Imagem Selecionada -->
-                    <div class="mb-3 text-start">
-                        <img id="editImagemPreview" src="" class="img-fluid" alt="Preview da Imagem Selecionada">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -311,72 +319,73 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
         </div>
     </div>
 </div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Configuração do Modal de Edição
-        document.querySelectorAll('.bi-pencil').forEach(button => {
-            button.addEventListener('click', function () {
-                const idProduto = this.dataset.id;
-                const nomeProduto = this.dataset.nome;
-                const precoProduto = this.dataset.preco;
-                const descricaoProduto = this.dataset.descricao;
-                const quantidadeProduto = this.dataset.quantidade;
-                const idImage = this.dataset.idimage;
-                const urlImagem = this.dataset.url;
-                const categoriaProduto = this.dataset.categoria;
-                const subcategoriaProduto = this.dataset.subcategoria;
-                const situacaoProduto = this.dataset.situacao;
+document.addEventListener('DOMContentLoaded', () => {
+    // Configuração do Modal de Edição
+    document.querySelectorAll('.bi-pencil').forEach(button => {
+        button.addEventListener('click', function () {
+            const idProduto = this.dataset.id;
+            const nomeProduto = this.dataset.nome;
+            const precoProduto = this.dataset.preco;
+            const descricaoProduto = this.dataset.descricao;
+            const quantidadeProduto = this.dataset.quantidade;
+            const idImage = this.dataset.idimage;
+            const urlImagem = this.dataset.url;
+            const categoriaProduto = this.dataset.categoria;
+            const subcategoriaProduto = this.dataset.subcategoria;
+            const situacaoProduto = this.dataset.situacao;
 
-                // Preencher os campos do modal com os valores
-                document.getElementById('editIdProduto').value = idProduto;
-                document.getElementById('editNomeProduto').value = nomeProduto;
-                document.getElementById('editPrecoProduto').value = precoProduto;
-                document.getElementById('editDescricaoProduto').value = descricaoProduto;
-                document.getElementById('editQuantidadeProduto').value = quantidadeProduto;
+            document.getElementById('editIdProduto').value = idProduto;
+            document.getElementById('editNomeProduto').value = nomeProduto;
+            document.getElementById('editUrlProduto').value = urlProduto;
+            document.getElementById('editPrecoProduto').value = precoProduto;
+            document.getElementById('editDescricaoProduto').value = descricaoProduto;
+            document.getElementById('editQuantidadeProduto').value = quantidadeProduto;
 
-                // Atualizar o select de imagem
-                const selectImagem = document.getElementById('editIdImage');
-                const options = selectImagem.querySelectorAll('option');
-                let found = false;
-                options.forEach(option => {
-                    if (option.value === idImage) {
-                        option.selected = true;
-                        document.getElementById('editImagemPreview').src = urlImagem; // Mostrar a imagem selecionada
-                        found = true;
-                    }
-                });
-
-                if (!found) {
-                    document.getElementById('editImagemPreview').src = ''; // Limpar o preview se a imagem não for encontrada
+            // Atualizar o preview da imagem
+            const selectImagem = document.getElementById('editNomeImagem');
+            const options = selectImagem.querySelectorAll('option');
+            let found = false;
+            options.forEach(option => {
+                if (option.value === idImage) {
+                    option.selected = true;
+                    document.getElementById('editImagemPreview').src = urlImagem; // Mostrar a imagem selecionada
+                    found = true;
                 }
-
-                // Atualizar os selects de categoria e subcategoria
-                document.getElementById('editCategoriaProduto').value = categoriaProduto;
-                document.getElementById('editSubcategoriaProduto').value = subcategoriaProduto;
-                document.getElementById('editSituacaoProduto').value = situacaoProduto;
-
-                // Abrir o modal de edição
-                const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
-                modal.show();
             });
-        });
 
-        // Alterar preview da imagem ao trocar a seleção no modal de edição
-        document.getElementById('editIdImage').addEventListener('change', function () {
-            const selectedOption = this.options[this.selectedIndex];
-            const url = selectedOption.dataset.url;
-            document.getElementById('editImagemPreview').src = url;
-        });
+            if (!found) {
+                document.getElementById('editImagemPreview').src = ''; // Limpar o preview se a imagem não for encontrada
+            }
 
-        // Configuração do Modal de Exclusão
-        document.querySelectorAll('.bi-trash').forEach(button => {
-            button.addEventListener('click', function () {
-                const deleteId = this.dataset.id;
-                const confirmDeleteButton = document.getElementById('confirmDeleteProduct');
-                confirmDeleteButton.href = 'index.php?tela=cadListarProdutos&action=delete&idProduto=' + deleteId;
-                const modal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
-                modal.show();
-            });
+            // Atualizar os selects de categoria e subcategoria
+            document.getElementById('editCategoriaProduto').value = categoriaProduto;
+            document.getElementById('editSubcategoriaProduto').value = subcategoriaProduto;
+            document.getElementById('editSituacaoProduto').value = situacaoProduto;
+
+            // Abrir o modal de edição
+            const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
+            modal.show();
         });
     });
+
+    // Alterar preview da imagem ao trocar a seleção no modal de edição
+    document.getElementById('editNomeImagem').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const url = selectedOption.dataset.url;
+        document.getElementById('editImagemPreview').src = url;
+    });
+
+    // Configuração do Modal de Exclusão
+    document.querySelectorAll('.bi-trash').forEach(button => {
+        button.addEventListener('click', function () {
+            const deleteId = this.dataset.id;
+            const confirmDeleteButton = document.getElementById('confirmDeleteProduct');
+            confirmDeleteButton.href = 'index.php?tela=cadListarProduto&action=delete&idProduto=' + deleteId;
+            const modal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
+            modal.show();
+        });
+    });
+});
 </script>

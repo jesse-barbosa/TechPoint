@@ -26,31 +26,40 @@ class MostrarProdutos extends criaPaginacao {
 
     public function mostrarProdutos() {
         try {
-            $sql = "SELECT * FROM products WHERE statusProduct = 'ATIVO' AND deletedProduct = 0";
+            // Consulta SQL que faz a junção entre as tabelas products e images
+            $sql = "
+                SELECT p.idProduct, p.nameProduct, p.priceProduct, i.urlImage
+                FROM products p
+                LEFT JOIN images i ON p.idImage = i.idImage
+                WHERE p.statusProduct = 'ATIVO' AND p.deletedProduct = 0
+            ";
+            
             if ($this->filtroCategoria) {
-                $sql .= " AND idCategory = " . intval($this->filtroCategoria);
+                $sql .= " AND p.idCategory = " . intval($this->filtroCategoria);
             }
-        
+
             $this->setParametro($this->strNumPagina);
             $this->setFileName($this->strUrl);
-            $this->setInfoMaxPag(3);  // Exibir 3 produtos por página
-            $this->setMaximoLinks(9); // Mostrar até 9 links de paginação
+            $this->setInfoMaxPag(8);
+            $this->setMaximoLinks(9);
             $this->setSQL($sql);
             self::iniciaPaginacao();
             $contador = 0;
-        
+
             $produtos = $this->results();
             if (count($produtos) > 0) {
                 foreach ($produtos as $resultado) {
                     $contador++;
+                    $imagemProduto = $resultado['urlImage'];
+                    
                     echo "
                         <div class='col-4 col-md-4 col-lg-3 mb-3'>
-                            <a href='index.php?tela=viewProduct&id=" . $resultado['idProduct'] . "' class='link link-underline link-underline-opacity-0'>
+                            <a href='index.php?tela=viewProduct&id=" . htmlspecialchars($resultado['idProduct']) . "' class='link link-underline link-underline-opacity-0'>
                                 <div class='card shadow-none p-2 h-100'>
-                                    <img src='" . $resultado['imageProduct'] . "' class='p-1 card-img-top' height='220' alt='Foto Produto'>
+                                    <img src='" . htmlspecialchars($imagemProduto) . "' class='p-1 card-img-top' height='220' alt='Foto Produto'>
                                     <div class='card-body'>
-                                        <h5 class='card-title fw-bold'>" . $resultado['nameProduct'] . "</h5>    
-                                        <h5 class='card-title text-success fw-bold'>R$" . $resultado['priceProduct'] . "</h5>    
+                                        <h5 class='card-title fw-bold'>" . htmlspecialchars($resultado['nameProduct']) . "</h5>    
+                                        <h5 class='card-title text-success fw-bold'>R$" . htmlspecialchars(number_format($resultado['priceProduct'], 2, ',', '.')) . "</h5>    
                                     </div>
                                 </div>
                             </a>
@@ -64,6 +73,5 @@ class MostrarProdutos extends criaPaginacao {
             echo "Erro: " . $e->getMessage();
         }
     }    
-    
 }
 ?>

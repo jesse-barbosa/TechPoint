@@ -1,6 +1,5 @@
 <?php
 include_once("MinhaConexao.php");
-include_once("UploadImagem.php");
 
 class AdicionarProduto extends MinhaConexao {
 
@@ -8,13 +7,8 @@ class AdicionarProduto extends MinhaConexao {
         parent::__construct();
     }
 
-    public function adicionarProduto($nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $imagem) {
+    public function adicionarProduto($nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $idImage) {
         try {
-            // Faz o upload da imagem
-            $upload = new UploadImagem();
-            $upload->upload($imagem, "products");
-            $idImage = $upload->getNovoDiretorio(); // Obtendo o caminho da imagem após o upload
-            
             // Inserir novo produto
             $sql = "INSERT INTO products (nameProduct, idImage, descProduct, quantProduct, priceProduct, idCategory, idSubCategory, statusProduct)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

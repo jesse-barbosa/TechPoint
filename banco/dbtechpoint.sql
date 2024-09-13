@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Set-2024 às 22:15
+-- Tempo de geração: 14/09/2024 às 01:55
 -- Versão do servidor: 10.4.32-MariaDB
--- versão do PHP: 8.2.12
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `banners`
+-- Estrutura para tabela `banners`
 --
 
 CREATE TABLE `banners` (
@@ -35,7 +35,7 @@ CREATE TABLE `banners` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `banners`
+-- Despejando dados para a tabela `banners`
 --
 
 INSERT INTO `banners` (`idBanner`, `idImage`, `statusBanner`, `deletedBanner`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `banners` (`idBanner`, `idImage`, `statusBanner`, `deletedBanner`) V
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cart`
+-- Estrutura para tabela `cart`
 --
 
 CREATE TABLE `cart` (
@@ -59,7 +59,7 @@ CREATE TABLE `cart` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `categories`
+-- Estrutura para tabela `categories`
 --
 
 CREATE TABLE `categories` (
@@ -71,7 +71,7 @@ CREATE TABLE `categories` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `categories`
+-- Despejando dados para a tabela `categories`
 --
 
 INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusCategory`, `deletedCategory`) VALUES
@@ -85,7 +85,7 @@ INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusC
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contacts`
+-- Estrutura para tabela `contacts`
 --
 
 CREATE TABLE `contacts` (
@@ -100,7 +100,7 @@ CREATE TABLE `contacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci COMMENT='Tabela para salvar mensagens dos usuários.';
 
 --
--- Extraindo dados da tabela `contacts`
+-- Despejando dados para a tabela `contacts`
 --
 
 INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact`, `stateContact`, `subjectContact`, `messageContact`, `deletedContact`) VALUES
@@ -131,7 +131,7 @@ INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `images`
+-- Estrutura para tabela `images`
 --
 
 CREATE TABLE `images` (
@@ -144,33 +144,31 @@ CREATE TABLE `images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `images`
+-- Despejando dados para a tabela `images`
 --
 
 INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `statusImage`, `deletedImage`) VALUES
 (1, 'Primeiro Banner', '/TechPoint/img/banners/banner1.jpg', 'banners', 'ATIVO', 0),
 (2, 'Segundo Banner', '/TechPoint/img/banners/banner2.jpg', 'banners', 'ATIVO', 0),
-(4, 'Array', 'Terceiro Banner', 'banners', 'ATIVO', 1),
-(5, 'Array', 'Terceiro Banner', 'banners', 'ATIVO', 1),
-(6, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
-(7, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
-(8, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
-(9, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
-(10, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
-(11, 'Terceiro Banner', '/TechPoint/img/banners/banner3.jpg', 'banners', 'ATIVO', 1),
 (12, 'Terceiro Banner', '/TechPoint/img/banners/banner3.jpg', 'banners', 'ATIVO', 0),
-(13, 'i5 12400', '/TechPoint/img/products/processador_intel_i5.jpg', 'products', 'ATIVO', 0);
+(13, 'i5 12400', '/TechPoint/img/products/processador_intel_i5.jpg', 'products', 'ATIVO', 0),
+(14, 'Ryzen 5 5600x', '/TechPoint/img/products/processador_amd_ryzen5.jpg', 'products', 'ATIVO', 0),
+(15, 'Placa Mãe ASUS ATX', '/TechPoint/img/products/placa_mae_atx_asus.jpg', 'products', 'ATIVO', 0),
+(16, 'Ryzen 5 5600x', '/TechPoint/img/products/processador_amd_ryzen5.jpg', 'products', 'ATIVO', 0),
+(17, 'Memoria RAM DDR4 16G', '/TechPoint/img/products/memoria_ram_ddr4.jpg', 'products', 'ATIVO', 0),
+(18, 'SSD Kingston 500GB', '/TechPoint/img/products/ssd_500gb.jpg', 'products', 'ATIVO', 0),
+(19, 'NVIDIA RTX 3060', '/TechPoint/img/products/placa_video_nvidia_rtx3060.jpg', 'products', 'ATIVO', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `products`
+-- Estrutura para tabela `products`
 --
 
 CREATE TABLE `products` (
   `idProduct` int(11) NOT NULL,
   `nameProduct` char(20) DEFAULT NULL,
-  `imageProduct` char(100) DEFAULT NULL,
+  `idImage` int(11) DEFAULT NULL,
   `descProduct` char(250) DEFAULT NULL,
   `quantProduct` int(11) DEFAULT 0,
   `quantSoldProduct` int(11) NOT NULL DEFAULT 0,
@@ -182,21 +180,22 @@ CREATE TABLE `products` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `products`
+-- Despejando dados para a tabela `products`
 --
 
-INSERT INTO `products` (`idProduct`, `nameProduct`, `imageProduct`, `descProduct`, `quantProduct`, `quantSoldProduct`, `priceProduct`, `idCategory`, `idSubCategory`, `statusProduct`, `deletedProduct`) VALUES
-(1, 'Intel i5-12400', '/TechPoint/img/products/processador_intel_i5.jpg', 'Processador Intel Core i5 de 12° geração, 6 núcleos', 15, 0, 1200, 1, 1, 'ATIVO', 0),
-(2, 'Ryzen 5 5600x', '/TechPoint/img/products/processador_amd_ryzen5.jpg', 'Processador AMD Ryzen 5, 6 núcleos, 12 threads', 10, 0, 1100, 1, 2, 'ATIVO', 0),
-(3, 'Placa Mãe ASUS ATX', '/TechPoint/img/products/placa_mae_atx_asus.jpg', 'Placa mãe ASUS com suporte para processadores Intel e AMD, formato ATX', 20, 0, 900, 2, 3, 'ATIVO', 0),
-(4, 'Memoria RAM DDR4 16G', '/TechPoint/img/products/memoria_ram_ddr4.jpg', 'Memória RAM DDR4 16GB 3200MHz', 30, 0, 450, 3, 5, 'ATIVO', 0),
-(5, 'SSD Kingston 500GB', '/TechPoint/img/products/ssd_500gb.jpg', 'SSD Kingston 500GB NVMe', 25, 0, 350, 4, 8, 'ATIVO', 0),
-(6, 'NVIDIA RTX 3060', '/TechPoint/img/products/placa_video_nvidia_rtx3060.jpg', 'Placa de vídeo NVIDIA GeForce RTX 3060, 12GB GDDR6', 8, 0, 2400, 5, 9, 'ATIVO', 0);
+INSERT INTO `products` (`idProduct`, `nameProduct`, `idImage`, `descProduct`, `quantProduct`, `quantSoldProduct`, `priceProduct`, `idCategory`, `idSubCategory`, `statusProduct`, `deletedProduct`) VALUES
+(1, 'Intel i5-12400', 13, 'Processador top', 50, 0, 30, 1, 1, 'ATIVO', 0),
+(2, 'Ryzen 5 5600x', 16, 'Processador AMD Ryzen 5, 6 núcleos, 12 threads', 10, 0, 1100, 1, 2, 'ATIVO', 0),
+(3, 'Placa Mãe ASUS ATX', 15, 'Placa mãe ASUS com suporte para processadores Intel e AMD, formato ATX', 20, 0, 900, 2, 3, 'ATIVO', 0),
+(4, 'Memoria RAM DDR4 16G', 17, 'Memória RAM DDR4 16GB 3200MHz', 30, 0, 450, 3, 5, 'ATIVO', 0),
+(5, 'SSD Kingston 500GB', 18, 'SSD Kingston 500GB NVMe', 25, 0, 350, 4, 8, 'ATIVO', 0),
+(6, 'NVIDIA RTX 3060', 19, 'Placa de vídeo NVIDIA GeForce RTX 3060, 12GB GDDR6', 8, 0, 2400, 5, 9, 'ATIVO', 0),
+(27, 'Teste', 16, '0', 60, 0, 210, 1, 2, 'ativo', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `subcategories`
+-- Estrutura para tabela `subcategories`
 --
 
 CREATE TABLE `subcategories` (
@@ -208,7 +207,7 @@ CREATE TABLE `subcategories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `subcategories`
+-- Despejando dados para a tabela `subcategories`
 --
 
 INSERT INTO `subcategories` (`idSubCategory`, `nameSubCategory`, `descSubCategory`, `statusSubCategory`, `deletedSubCategory`) VALUES
@@ -225,7 +224,7 @@ INSERT INTO `subcategories` (`idSubCategory`, `nameSubCategory`, `descSubCategor
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `users`
+-- Estrutura para tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -239,7 +238,7 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `users`
+-- Despejando dados para a tabela `users`
 --
 
 INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `statusUser`, `typeUser`, `deletedUser`) VALUES
@@ -251,13 +250,13 @@ INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `statusU
 --
 
 --
--- Índices para tabela `banners`
+-- Índices de tabela `banners`
 --
 ALTER TABLE `banners`
   ADD PRIMARY KEY (`idBanner`);
 
 --
--- Índices para tabela `cart`
+-- Índices de tabela `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`idCart`),
@@ -265,43 +264,43 @@ ALTER TABLE `cart`
   ADD KEY `product_id` (`product_id`);
 
 --
--- Índices para tabela `categories`
+-- Índices de tabela `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`idCategory`);
 
 --
--- Índices para tabela `contacts`
+-- Índices de tabela `contacts`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`idContact`);
 
 --
--- Índices para tabela `images`
+-- Índices de tabela `images`
 --
 ALTER TABLE `images`
   ADD PRIMARY KEY (`idImage`);
 
 --
--- Índices para tabela `products`
+-- Índices de tabela `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`idProduct`);
 
 --
--- Índices para tabela `subcategories`
+-- Índices de tabela `subcategories`
 --
 ALTER TABLE `subcategories`
   ADD PRIMARY KEY (`idSubCategory`);
 
 --
--- Índices para tabela `users`
+-- Índices de tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`idUser`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
@@ -332,13 +331,13 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT de tabela `images`
 --
 ALTER TABLE `images`
-  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `products`
 --
 ALTER TABLE `products`
-  MODIFY `idProduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `idProduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `subcategories`
