@@ -31,21 +31,19 @@ class MostrarBanners extends CriaPaginacao {
             echo "Erro ao contar os banners: " . $e->getMessage();
         }
     }
-
     public function mostrarBanners() {
         try {
-            $sql = "SELECT b.idBanner, b.statusBanner, i.nameImage
+            $sql = "SELECT b.idBanner, b.statusBanner, i.nameImage, i.urlImage
                     FROM banners b
                     JOIN images i ON b.idImage = i.idImage
                     WHERE b.deletedBanner = 0";
-
+    
             $this->setParametro($this->strNumPagina);
             $this->setFileName($this->strUrl);
             $this->setInfoMaxPag(3);
             $this->setMaximoLinks(9);
             $this->setSQL($sql);
             self::iniciaPaginacao();
-            $contador = 0;
             $banners = $this->results();
             
             if (count($banners) > 0) {
@@ -63,12 +61,11 @@ class MostrarBanners extends CriaPaginacao {
                         <tbody>
                 ";
                 foreach($banners as $resultado){
-                    $contador++;
                     echo "<tr class='text-center'>";
                     echo "<td class='fw-lighter'>".$resultado['idBanner']."</td>";
-                    echo "<td class='fw-lighter'>".$resultado['nameImage']."</td>";
+                    echo "<td class='fw-lighter'><img src='".$resultado['urlImage']."' alt='".$resultado['nameImage']."' width='100'></td>";
                     echo "<td class='fw-lighter'>".$resultado['statusBanner']."</td>";
-                    echo "<td><a href='#' class='bi bi-pencil btn btn-outline-dark' data-bs-toggle='modal' data-bs-target='#editBannerModal' data-id='".$resultado['idBanner']."' data-situacao='".$resultado['statusBanner']."'></a></td>";
+                    echo "<td><a href='#' class='bi bi-pencil btn btn-outline-dark' data-bs-toggle='modal' data-bs-target='#editBannerModal' data-id='".$resultado['idBanner']."' data-situacao='".$resultado['statusBanner']."' data-url='".$resultado['urlImage']."'></a></td>";
                     echo "<td><i class='bi bi-trash btn btn-dark' data-id='".$resultado['idBanner']."'></i></td>";
                     echo "</tr>";
                 }
@@ -83,5 +80,6 @@ class MostrarBanners extends CriaPaginacao {
             echo "Erro: ".$e->getMessage();
         }
     }
+    
 }
 ?>

@@ -7,10 +7,10 @@ class AlterarBanner extends MinhaConexao {
         parent::__construct();
     }
 
-    public function alterarBanner($idBanner, $situacao, $nomeImagem) {
-        $sql = "UPDATE banners SET urlBanner = ?, statusBanner = ? WHERE idBanner = ?";
+    public function alterarBanner($idBanner, $situacao, $idImage) {
+        $sql = "UPDATE banners SET idImage = ?, statusBanner = ? WHERE idBanner = ?";
         $stmt = $this->getConnection()->prepare($sql);
-        $stmt->bind_param("ssi", $nomeImagem, $situacao, $idBanner);
+        $stmt->bind_param("ssi", $idImage, $situacao, $idBanner);
         if ($stmt->execute()) {
             echo "Banner atualizado com sucesso!";
         } else {

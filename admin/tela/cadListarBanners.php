@@ -1,15 +1,19 @@
 <?php
 // Adicionar
 include_once("../classe/AdicionarBanner.php");
-include_once("../classe/ListarImagens.php");
 
 if (isset($_POST['enviar'])) {
     $situacao = $_POST['situacao'];
-    $idImage = $_POST['idImage'];
-    
-    $banner = new AdicionarBanner();
-    $banner->adicionarBanner($idImage, $situacao);
+    $idImage = isset($_POST['idImage']) ? $_POST['idImage'] : null;
+
+    if ($idImage !== null) {
+        $banner = new AdicionarBanner();
+        $banner->adicionarBanner($idImage, $situacao);
+    } else {
+        echo "Erro: Nenhuma imagem foi selecionada.";
+    }
 }
+
 
 // Editar
 include_once("../classe/AlterarBanner.php");
@@ -45,103 +49,82 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idBan
                 <button type="button" class="btn btn-dark fw-medium" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Adicionar
                 </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo item</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form method="POST" action="">
+                                    <div class="modal-body">
+                                        <!-- Seleção da Imagem -->
+                                        <div class="mb-3 text-start">
+                                            <label for="idImage" class="form-label">Selecione a Imagem:</label>
+                                            <select name="idImage" class="form-select" required>
+                                                <option value="" disabled selected>Escolha uma imagem</option>
+                                                <?php
+                                                    include_once("../classe/ListarImagens.php");
+                                                    $listarImagens = new ListarImagens();
+                                                    $imagens = $listarImagens->listarImagens();
+                                                ?>
+                                            </select>
+                                        </div>
 
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo item</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <!-- Seleção do Status -->
+                                        <div class="mb-3 text-start">
+                                            <label for="situacao" class="form-label">Status do Banner:</label>
+                                            <select name="situacao" class="form-select" required>
+                                                <option value="ATIVO">Ativo</option>
+                                                <option value="INATIVO">Inativo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" name="enviar" class="btn btn-dark">Adicionar Banner</button>
+                                    </div>
+                                </form>
                             </div>
-                            <form action="index.php?tela=cadListarBanners" method="post">
-                                <div class="modal-body">
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <select name="nomeImagem" class="form-select border-0" required>
-                                            <?php
-                                                include_once("../classe/ListarImagens.php");
-                                                $listarImagens = new ListarImagens();
-                                                $imagens = $listarImagens->listarImagens('banners');
-                                                foreach ($imagens as $imagem) {
-                                                    echo "<option value=\"{$imagem['idImage']}\">{$imagem['nameImage']}</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <select name="situacao" class="form-select border-0" required>
-                                            <option value='ATIVO'>ATIVO</option>
-                                            <option value='DESATIVO'>DESATIVO</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="modal-footer border-0">
-                                    <button type="submit" name="enviar" class="btn btn-dark form-control fw-medium">Adicionar</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Modal de Edição -->
-<div class="modal fade" id="editBannerModal" tabindex="-1" aria-labelledby="editBannerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editBannerModalLabel">Editar Banner</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="index.php?tela=cadListarBanners" method="post">
-                <div class="modal-body">
-                    <input type="hidden" name="idBanner" id="editIdBanner">
-                    <div class="mb-3">
-                        <label for="editNomeImagem" class="form-label">Imagem</label>
-                        <select class="form-select" id="editNomeImagem" name="nomeImagem" required>
-                            <?php
-                                include_once("../classe/ListarImagens.php");
-                                $listarImagens = new ListarImagens();
-                                $imagens = $listarImagens->listarImagens('banners');
-                                foreach ($imagens as $imagem) {
-                                    echo "<option value=\"{$imagem['nameImage']}\">{$imagem['nameImage']}</option>";
-                                }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editSituacaoBanner" class="form-label">Situação</label>
-                        <select class="form-select" id="editSituacaoBanner" name="situacao" required>
-                            <option value='ATIVO'>ATIVO</option>
-                            <option value='DESATIVO'>DESATIVO</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" name="editar" class="btn btn-dark form-control">Salvar alterações</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.bi-pencil').forEach(button => {
         button.addEventListener('click', function () {
-            document.getElementById('editIdBanner').value = this.dataset.id;
-            document.getElementById('editSituacaoBanner').value = this.dataset.situacao;
-            document.getElementById('editImagemBanner').value = this.dataset.idImage;
+            const idBanner = this.dataset.id;
+            const situacao = this.dataset.situacao;
+            const urlImagem = this.dataset.url;
+
+            document.getElementById('editIdBanner').value = idBanner;
+            document.getElementById('editSituacaoBanner').value = situacao;
+
+            // Atualizar o preview da imagem
+            const selectImagem = document.getElementById('editNomeImagem');
+            const options = selectImagem.querySelectorAll('option');
+            options.forEach(option => {
+                if (option.value === idImage) {
+                    option.selected = true;
+                    document.getElementById('editImagemPreview').src = option.dataset.url;
+                }
+            });
 
             const modal = new bootstrap.Modal(document.getElementById('editBannerModal'));
             modal.show();
         });
     });
+
+    document.getElementById('editNomeImagem').addEventListener('change', function () {
+        const url = this.options[this.selectedIndex].dataset.url;
+        document.getElementById('editImagemPreview').src = url;
+    });
 });
+
 </script>
 
 <!-- Modal de Confirmação de Exclusão -->

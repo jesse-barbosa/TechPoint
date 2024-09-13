@@ -1,25 +1,22 @@
 <?php
 include_once("MinhaConexao.php");
-include_once("UploadImagem.php");
 
-class AdicionarImagem extends MinhaConexao {
-    public function adicionarImagem($imagem, $nomeImagem, $tipoImagem, $situacao) {
+class AdicionarBanner extends MinhaConexao {
+
+    public function __construct() {
+        parent::__construct();
+    }
+
+    public function adicionarBanner($idImage, $situacao) {
         try {
-            $upload = new UploadImagem();
-            $upload->upload($imagem, $tipoImagem);
-            $caminhoImagem = $upload->getNovoDiretorio();
-
-            $sql = "INSERT INTO images (nameImage, urlImage, typeImage, statusImage) VALUES (?, ?, ?, ?)";
-            $stmt = $this->conectar->prepare($sql);
-            $stmt->bind_param("ssss", $nomeImagem, $caminhoImagem, $tipoImagem, $situacao);
-            $stmt->execute();
-            
-            if ($stmt->affected_rows > 0) {
-                echo "Imagem adicionada com sucesso!";
+            $sql = "INSERT INTO banners (idImage, statusBanner) VALUES (?, ?)";
+            $stmt = $this->getConnection()->prepare($sql);
+            $stmt->bind_param("ss", $idImage, $situacao);
+            if ($stmt->execute()) {
+                echo "<script>alert('Banner adicionado com sucesso!');window.location.href = 'index.php?tela=cadListarBanners';</script>";
             } else {
-                echo "Falha ao adicionar a imagem.";
+                echo "Erro ao adicionar banner: " . $stmt->error;
             }
-            $stmt->close();
         } catch (Exception $e) {
             echo "Erro: " . $e->getMessage();
         }

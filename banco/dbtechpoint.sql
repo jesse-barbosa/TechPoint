@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Tempo de geração: 13/09/2024 às 16:00
+-- Host: 127.0.0.1
+-- Tempo de geração: 13-Set-2024 às 17:27
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,28 +24,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `banners`
+-- Estrutura da tabela `banners`
 --
 
 CREATE TABLE `banners` (
   `idBanner` int(11) NOT NULL,
   `idImage` int(11) DEFAULT NULL,
-  `linkBanner` char(100) NOT NULL DEFAULT 'index.php?tela=home',
   `statusBanner` char(10) NOT NULL DEFAULT 'ATIVO',
   `deletedBanner` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `banners`
+-- Extraindo dados da tabela `banners`
 --
 
-INSERT INTO `banners` (`idBanner`, `idImage`, `linkBanner`, `statusBanner`, `deletedBanner`) VALUES
-(1, 1, '', 'ATIVO', 0);
+INSERT INTO `banners` (`idBanner`, `idImage`, `statusBanner`, `deletedBanner`) VALUES
+(1, 1, 'ATIVO', 0),
+(21, 2, 'ATIVO', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cart`
+-- Estrutura da tabela `cart`
 --
 
 CREATE TABLE `cart` (
@@ -59,7 +59,7 @@ CREATE TABLE `cart` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `categories`
+-- Estrutura da tabela `categories`
 --
 
 CREATE TABLE `categories` (
@@ -71,7 +71,7 @@ CREATE TABLE `categories` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `categories`
+-- Extraindo dados da tabela `categories`
 --
 
 INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusCategory`, `deletedCategory`) VALUES
@@ -88,7 +88,7 @@ INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusC
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `contacts`
+-- Estrutura da tabela `contacts`
 --
 
 CREATE TABLE `contacts` (
@@ -103,7 +103,7 @@ CREATE TABLE `contacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci COMMENT='Tabela para salvar mensagens dos usuários.';
 
 --
--- Despejando dados para a tabela `contacts`
+-- Extraindo dados da tabela `contacts`
 --
 
 INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact`, `stateContact`, `subjectContact`, `messageContact`, `deletedContact`) VALUES
@@ -134,7 +134,7 @@ INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `images`
+-- Estrutura da tabela `images`
 --
 
 CREATE TABLE `images` (
@@ -142,20 +142,23 @@ CREATE TABLE `images` (
   `nameImage` char(50) NOT NULL,
   `urlImage` char(100) NOT NULL,
   `typeImage` char(10) NOT NULL,
+  `statusImage` char(10) NOT NULL DEFAULT 'ATIVO',
   `deletedImage` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `images`
+-- Extraindo dados da tabela `images`
 --
 
-INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `deletedImage`) VALUES
-(1, 'Primeiro Banner', '/TechPoint/img/banners/banner1.jpg', 'banners', 0);
+INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `statusImage`, `deletedImage`) VALUES
+(1, 'Primeiro Banner', '/TechPoint/img/banners/banner1.jpg', 'banners', 'ATIVO', 0),
+(2, 'Segundo Banner', '/TechPoint/img/banners/banner2.jpg', 'banners', 'ATIVO', 0),
+(3, 'Terceiro Banner', '/TechPoint/img/products/banner3.jpg', 'banners', 'ATIVO', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `products`
+-- Estrutura da tabela `products`
 --
 
 CREATE TABLE `products` (
@@ -173,7 +176,7 @@ CREATE TABLE `products` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `products`
+-- Extraindo dados da tabela `products`
 --
 
 INSERT INTO `products` (`idProduct`, `nameProduct`, `imageProduct`, `descProduct`, `quantProduct`, `quantSoldProduct`, `priceProduct`, `idCategory`, `idSubCategory`, `statusProduct`, `deletedProduct`) VALUES
@@ -187,7 +190,7 @@ INSERT INTO `products` (`idProduct`, `nameProduct`, `imageProduct`, `descProduct
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `subcategories`
+-- Estrutura da tabela `subcategories`
 --
 
 CREATE TABLE `subcategories` (
@@ -199,7 +202,7 @@ CREATE TABLE `subcategories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `subcategories`
+-- Extraindo dados da tabela `subcategories`
 --
 
 INSERT INTO `subcategories` (`idSubCategory`, `nameSubCategory`, `descSubCategory`, `statusSubCategory`, `deletedSubCategory`) VALUES
@@ -216,7 +219,7 @@ INSERT INTO `subcategories` (`idSubCategory`, `nameSubCategory`, `descSubCategor
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `users`
+-- Estrutura da tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -231,7 +234,7 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `users`
+-- Extraindo dados da tabela `users`
 --
 
 INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `iconUser`, `statusUser`, `typeUser`, `deletedUser`) VALUES
@@ -243,13 +246,13 @@ INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `iconUse
 --
 
 --
--- Índices de tabela `banners`
+-- Índices para tabela `banners`
 --
 ALTER TABLE `banners`
   ADD PRIMARY KEY (`idBanner`);
 
 --
--- Índices de tabela `cart`
+-- Índices para tabela `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`idCart`),
@@ -257,50 +260,50 @@ ALTER TABLE `cart`
   ADD KEY `product_id` (`product_id`);
 
 --
--- Índices de tabela `categories`
+-- Índices para tabela `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`idCategory`);
 
 --
--- Índices de tabela `contacts`
+-- Índices para tabela `contacts`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`idContact`);
 
 --
--- Índices de tabela `images`
+-- Índices para tabela `images`
 --
 ALTER TABLE `images`
   ADD PRIMARY KEY (`idImage`);
 
 --
--- Índices de tabela `products`
+-- Índices para tabela `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`idProduct`);
 
 --
--- Índices de tabela `subcategories`
+-- Índices para tabela `subcategories`
 --
 ALTER TABLE `subcategories`
   ADD PRIMARY KEY (`idSubCategory`);
 
 --
--- Índices de tabela `users`
+-- Índices para tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`idUser`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `banners`
 --
 ALTER TABLE `banners`
-  MODIFY `idBanner` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idBanner` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `cart`
@@ -324,7 +327,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT de tabela `images`
 --
 ALTER TABLE `images`
-  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `products`
@@ -343,17 +346,6 @@ ALTER TABLE `subcategories`
 --
 ALTER TABLE `users`
   MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
---
--- Restrições para tabelas despejadas
---
-
---
--- Restrições para tabelas `cart`
---
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`idUser`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`idProduct`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

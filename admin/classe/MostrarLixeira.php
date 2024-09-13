@@ -31,7 +31,7 @@ class MostrarLixeira extends CriaPaginacao {
             $sqlProdutos = "SELECT idProduct AS id, nameProduct AS name, descProduct AS description, 'Produto' AS tipo FROM products WHERE deletedProduct = 1";
             $sqlCategorias = "SELECT idCategory AS id, nameCategory AS name, descCategory AS description, 'Categoria' AS tipo FROM categories WHERE deletedCategory = 1";
             $sqlSubcategorias = "SELECT idSubcategory AS id, nameSubCategory AS name, descSubcategory AS description, 'Sub Categoria' AS tipo FROM subcategories WHERE deletedSubcategory = 1";
-            $sqlBanners = "SELECT idBanner AS id, urlBanner AS name, '' AS description, 'Banner' AS tipo FROM banners WHERE deletedBanner = 1";
+            $sqlBanners = "SELECT idBanner AS id, idImage AS name, '' AS description, 'Banner' AS tipo FROM banners WHERE deletedBanner = 1";
             $sqlUsuarios = "SELECT idUser AS id, nameUser AS name, emailUser AS description, 'Usuário' AS tipo FROM users WHERE deletedUser = 1";
             $sqlContatos = "SELECT idContact AS id, nameContact AS name, subjectContact AS description, 'Contato' AS tipo FROM contacts WHERE deletedContact = 1";
 

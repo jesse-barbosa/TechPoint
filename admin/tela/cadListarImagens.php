@@ -114,7 +114,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idIma
                 <div class="modal-body">
                     <input type="hidden" name="idImage" id="editIdImage">
                     <div class="mb-3">
-                        <label for="editName" class="form-label">Nome</label>
+                        <label for="editNameImage" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="editNameImage" name="name" required>
                     </div>
                     <div class="mb-3">
@@ -126,8 +126,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idIma
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="editUrlImage" class="form-label">URL da Imagem</label>
-                        <input type="text" class="form-control" id="editUrlImage" name="url">
+                        <label for="editUrlImage" class="form-label">Imagem</label>
+                        <input type="file" class="form-control" id="editUrlImage" name="url">
                     </div>
                     <div class="mb-3">
                         <label for="editStatusImage" class="form-label">Situação</label>
@@ -145,6 +145,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idIma
     </div>
 </div>
 
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.bi-pencil').forEach(button => {
@@ -152,8 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('editIdImage').value = this.dataset.id;
             document.getElementById('editNameImage').value = this.dataset.name;
             document.getElementById('editTypeImage').value = this.dataset.type;
-            document.getElementById('editUrlImage').value = this.dataset.url;
             document.getElementById('editStatusImage').value = this.dataset.status;
+
+            // Não define o valor do campo file para evitar problemas de segurança
+            // document.getElementById('editUrlImage').value = this.dataset.url; // Comentado intencionalmente
 
             const modal = new bootstrap.Modal(document.getElementById('editImageModal'));
             modal.show();
