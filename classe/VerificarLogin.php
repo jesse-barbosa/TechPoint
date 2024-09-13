@@ -34,10 +34,8 @@ class VerificarLogin extends Minhaconexao
         $resultado = self::listarDados($query);
         $dados = self::contarDados($query);
         
-        if($dados > 1){
-            echo $this->erro = "Dados duplicados no sistema, entre em contato com o administrador do sistema!";
-        }else if($dados <= 0){
-            echo $this->erro = "Email ou senha inválidos! <br>Entre em contato com o administrador do sistema!";
+        if($dados <= 0){
+            echo $this->erro = "Email ou senha inválidos.";
         }else if($dados == 1){
             session_start();
             $_SESSION['nome'] = $this->nome;
@@ -45,7 +43,7 @@ class VerificarLogin extends Minhaconexao
             $_SESSION['senha'] = $this->senha;
             $_SESSION['typeUser'] = $resultado[0]['typeUser'];
             
-            header('Location: /TechPoint/tela/index.php?tela=home');
+            echo "<script>window.location.href = 'tela/index.php?tela=home'</script>";
         }
      } catch (Exception $e) {
         echo "Erro: ".$e->getMessage();

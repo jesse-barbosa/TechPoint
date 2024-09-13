@@ -15,7 +15,7 @@ class MostrarIconeUsuario extends MinhaConexao
 
             if ($query) {
                 $result = $query->fetch_assoc();
-                echo "<img src='".$result['iconUser']."' height='40' class='mb-3' />";
+                echo "<img src='".$result['iconUser']."' height='40' />";
             } else {
                 return '';
             }

@@ -24,7 +24,7 @@ class MostrarBanners extends MinhaConexao
                 while ($banner = mysqli_fetch_assoc($resultado)) {
                     $classe = $ativa ? 'carousel-item active' : 'carousel-item';
                     $html .= '<div class="' . $classe . '">
-                                 <img src="' . $banner['urlBanner'] . '" class="d-block w-100" height="500" alt="Imagem do Banner">
+                                 <img src="' . $banner['urlBanner'] . '" class="d-block w-100 full-screen-banner" alt="Imagem do Banner">
                              </div>';
                     $ativa = false;
                 }

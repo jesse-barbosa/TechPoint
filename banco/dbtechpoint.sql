@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 13/09/2024 às 01:58
+-- Host: localhost
+-- Tempo de geração: 13/09/2024 às 16:00
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `banners` (
   `idBanner` int(11) NOT NULL,
-  `urlBanner` char(60) NOT NULL,
+  `idImage` int(11) DEFAULT NULL,
   `linkBanner` char(100) NOT NULL DEFAULT 'index.php?tela=home',
   `statusBanner` char(10) NOT NULL DEFAULT 'ATIVO',
   `deletedBanner` tinyint(1) NOT NULL DEFAULT 0
@@ -39,14 +39,8 @@ CREATE TABLE `banners` (
 -- Despejando dados para a tabela `banners`
 --
 
-INSERT INTO `banners` (`idBanner`, `urlBanner`, `linkBanner`, `statusBanner`, `deletedBanner`) VALUES
-(7, '/TechPoint/img/banners/banner1.jpg', '', 'ATIVO', 1),
-(9, '/TechPoint/img/banners/banner2.jpg', '', 'ATIVO', 0),
-(11, '/TechPoint/img/banners/banner3.jpg', '', 'ATIVO', 0),
-(12, '/TechPoint/img/banners/banner1.jpg', '', 'ATIVO', 0),
-(13, '/TechPoint/img/banners/banner1.jpg', '', 'ATIVO', 1),
-(14, '/TechPoint/img/banners/banner1.jpg', '', 'ATIVO', 1),
-(15, '/TechPoint/img/banners/banner3.jpg', '', 'ATIVO', 1);
+INSERT INTO `banners` (`idBanner`, `idImage`, `linkBanner`, `statusBanner`, `deletedBanner`) VALUES
+(1, 1, '', 'ATIVO', 0);
 
 -- --------------------------------------------------------
 
@@ -58,17 +52,9 @@ CREATE TABLE `cart` (
   `idCart` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `quantProducts` int(11) NOT NULL
+  `quantProducts` int(11) NOT NULL,
+  `added_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
-
---
--- Despejando dados para a tabela `cart`
---
-
-INSERT INTO `cart` (`idCart`, `user_id`, `product_id`, `quantProducts`) VALUES
-(8, 6, 4, 1),
-(9, 6, 1, 1),
-(10, 6, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -140,7 +126,10 @@ INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact
 (17, 'Diego Campos', 'diego.campos@email.com', 'Jundiaí', 'SP', 'Atualização de contato', 'Preciso atualizar meu endereço de entrega no cadastro.', 0),
 (18, 'Tatiane Almeida', 'tatiane.almeida@email.com', 'Sorocaba', 'SP', 'Problema com pagamento', 'Estou enfrentando problemas para realizar o pagamento do meu pedido.', 0),
 (19, 'Eduardo Ribeiro', 'eduardo.ribeiro@email.com', 'Campinas', 'SP', 'Problemas com site', 'O site está apresentando erro ao tentar finalizar a compra.', 0),
-(20, 'Larissa Oliveira', 'larissa.oliveira@email.com', 'Ribeirão Preto', 'SP', 'Feedback sobre atendimento', 'Gostaria de deixar um feedback positivo sobre o atendimento que recebi.', 0);
+(20, 'Larissa Oliveira', 'larissa.oliveira@email.com', 'Ribeirão Preto', 'SP', 'Feedback sobre atendimento', 'Gostaria de deixar um feedback positivo sobre o atendimento que recebi.', 0),
+(21, 'JessÃ© Barbosa', 'barbosajesse419@gmail.com', 'TeÃ³filo Otoni', 'MG', 'Teste', 'Testando o Teste', 0),
+(22, 'JessÃ© Barbosa', 'barbosajesse419@gmail.com', 'TeÃ³filo Otoni', 'MG', 'Teste', 'Testando o Teste', 0),
+(23, 'JessÃ© Barbosa', 'barbosajesse419@gmail.com', 'TeÃ³filo Otoni', 'MG', 'Teste', 'Testando o Teste', 0);
 
 -- --------------------------------------------------------
 
@@ -150,10 +139,9 @@ INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact
 
 CREATE TABLE `images` (
   `idImage` int(11) NOT NULL,
-  `nameImage` char(30) NOT NULL,
-  `typeImage` char(10) NOT NULL,
+  `nameImage` char(50) NOT NULL,
   `urlImage` char(100) NOT NULL,
-  `statusImage` char(10) NOT NULL DEFAULT 'ATIVO',
+  `typeImage` char(10) NOT NULL,
   `deletedImage` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
@@ -161,8 +149,8 @@ CREATE TABLE `images` (
 -- Despejando dados para a tabela `images`
 --
 
-INSERT INTO `images` (`idImage`, `nameImage`, `typeImage`, `urlImage`, `statusImage`, `deletedImage`) VALUES
-(1, 'Primeiro Banner', 'banners', '/TechPoint/img/banners/banner1.jpg', 'ATIVO', 0);
+INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `deletedImage`) VALUES
+(1, 'Primeiro Banner', '/TechPoint/img/banners/banner1.jpg', 'banners', 0);
 
 -- --------------------------------------------------------
 
@@ -247,9 +235,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `iconUser`, `statusUser`, `typeUser`, `deletedUser`) VALUES
-(4, 'Jesse Barbosa', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'admin', 0),
 (5, 'admin-master', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'admin-master', 0),
-(6, 'Jesse', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'default', 0);
+(35, 'Jesse Barbosa', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'default', 0);
 
 --
 -- Índices para tabelas despejadas
@@ -319,7 +306,7 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT de tabela `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `categories`
@@ -331,7 +318,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT de tabela `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `idContact` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idContact` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `images`
@@ -355,7 +342,18 @@ ALTER TABLE `subcategories`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`idUser`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`idProduct`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

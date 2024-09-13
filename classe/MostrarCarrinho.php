@@ -33,7 +33,10 @@ class MostrarCarrinho extends MinhaConexao {
 
             // Verifica se o carrinho está vazio
             if ($result->num_rows == 0) {
-                echo "<p class='alert alert-secondary mx-5'>Seu carrinho está vazio.</p>";
+                echo "<p class='text-secondary text-center my-5'>
+                <i class='bi bi-emoji-frown fs-4 my-2'></i><br />
+                Ops! Seu carrinho está vazio.
+                </p>";
             } else {
                 echo '<table class="table">';
                 echo '<thead><tr class="text-center">

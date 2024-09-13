@@ -18,6 +18,10 @@ header {
 .link {
     font-weight: 700 !important;
 }
+.full-screen-banner {
+    width: 100%;
+    height: 88vh;
+}
 .card {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

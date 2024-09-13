@@ -26,9 +26,9 @@ class MostrarProdutos extends criaPaginacao {
 
     public function mostrarProdutos() {
         try {
-            $sql = "SELECT * FROM products WHERE (statusProduct = 'ATIVO' AND deletedProduct = 0)";
+            $sql = "SELECT * FROM products WHERE statusProduct = 'ATIVO' AND deletedProduct = 0";
             if ($this->filtroCategoria) {
-                $sql .= " WHERE idCategory = " . intval($this->filtroCategoria);
+                $sql .= " AND idCategory = " . intval($this->filtroCategoria);
             }
         
             $this->setParametro($this->strNumPagina);
@@ -36,19 +36,13 @@ class MostrarProdutos extends criaPaginacao {
             $this->setInfoMaxPag(3);  // Exibir 3 produtos por página
             $this->setMaximoLinks(9); // Mostrar até 9 links de paginação
             $this->setSQL($sql);
-        
             self::iniciaPaginacao();
+            $contador = 0;
         
-            $offset = ($this->strNumPagina - 1) * 3; // Calcula o deslocamento
-            $sql .= " LIMIT $offset, 9"; // Limita a consulta à página atual
-        
-            $query = $this->execSql($sql);
-            if (!$query) {
-                throw new Exception("Erro na execução da consulta: " . mysqli_error($this->conectar));
-            }
-            $dados = mysqli_num_rows($query);
-            if ($dados > 0) {
-                while ($resultado = mysqli_fetch_assoc($query)) {
+            $produtos = $this->results();
+            if (count($produtos) > 0) {
+                foreach ($produtos as $resultado) {
+                    $contador++;
                     echo "
                         <div class='col-4 col-md-4 col-lg-3 mb-3'>
                             <a href='index.php?tela=viewProduct&id=" . $resultado['idProduct'] . "' class='link link-underline link-underline-opacity-0'>

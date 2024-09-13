@@ -38,7 +38,7 @@ class MostrarProdutos extends CriaPaginacao {
 
             $this->setParametro($this->strNumPagina);
             $this->setFileName($this->strUrl);
-            $this->setInfoMaxPag(3);
+            $this->setInfoMaxPag(6);
             $this->setMaximoLinks(9);
             $this->setSQL($sql);
             $this->iniciaPaginacao();
@@ -67,6 +67,7 @@ class MostrarProdutos extends CriaPaginacao {
                     <tbody>
                 ";
                 foreach ($produtos as $resultado) {
+                    $contador++;
                     echo "<tr class='text-center'>";
                         echo "<td class='fw-lighter'>".$resultado['idProduct']."</td>";
                         echo "<td class='fw-lighter'>".$resultado['imageProduct']."</td>";

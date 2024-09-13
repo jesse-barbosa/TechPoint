@@ -1,35 +1,29 @@
 <?php
 // Adicionar
 include_once("../classe/AdicionarBanner.php");
+include_once("../classe/ListarImagens.php");
 
-if(isset($_POST['enviar'])){
+if (isset($_POST['enviar'])) {
     $situacao = $_POST['situacao'];
-    if(isset($_FILES['url'])){
-        $imagem = $_FILES['url'];
-        $banner = new Banner($imagem, $situacao);
-        $banner->adicionarBanner();
-    } else {
-        echo "Imagem não foi enviada.";
-    }
+    $idImage = $_POST['idImage'];
+    
+    $banner = new AdicionarBanner();
+    $banner->adicionarBanner($idImage, $situacao);
 }
+
 // Editar
 include_once("../classe/AlterarBanner.php");
-include_once("../classe/UploadImagem.php");
 
 if (isset($_POST['editar'])) {
     $idBanner = $_POST['idBanner'];
     $situacao = $_POST['situacao'];
-    $caminhoImagem = '';
-    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-        $imagem = $_FILES['imagem'];
-        $upload = new UploadImagem();
-        $upload->upload($imagem, 'banners');
-        $caminhoImagem = $upload->getNovoDiretorio();
-    }
+    $idImage = $_POST['idImage'];
+    
     $banner = new AlterarBanner();
-    $banner->alterarBanner($idBanner, $situacao, $caminhoImagem);
+    $banner->alterarBanner($idBanner, $situacao, $idImage);
     echo "<script>window.location.href = 'index.php?tela=cadListarBanners';</script>";
 }
+
 // Apagar
 include_once("../classe/ApagarBanner.php");
 
@@ -58,15 +52,22 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idBan
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo
-                                    item</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo item</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="index.php?tela=cadListarBanners" method="post" enctype="multipart/form-data">
+                            <form action="index.php?tela=cadListarBanners" method="post">
                                 <div class="modal-body">
                                     <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="file" name="url" class="input border-0 py-1" required>
+                                        <select name="nomeImagem" class="form-select border-0" required>
+                                            <?php
+                                                include_once("../classe/ListarImagens.php");
+                                                $listarImagens = new ListarImagens();
+                                                $imagens = $listarImagens->listarImagens('banners');
+                                                foreach ($imagens as $imagem) {
+                                                    echo "<option value=\"{$imagem['idImage']}\">{$imagem['nameImage']}</option>";
+                                                }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="text-start border px-1 py-1 mb-1">
                                         <select name="situacao" class="form-select border-0" required>
@@ -86,6 +87,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idBan
         </div>
     </div>
 </div>
+
 <!-- Modal de Edição -->
 <div class="modal fade" id="editBannerModal" tabindex="-1" aria-labelledby="editBannerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -94,12 +96,21 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idBan
                 <h5 class="modal-title" id="editBannerModalLabel">Editar Banner</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="index.php?tela=cadListarBanners" method="post" enctype="multipart/form-data" id="editProductForm">
+            <form action="index.php?tela=cadListarBanners" method="post">
                 <div class="modal-body">
                     <input type="hidden" name="idBanner" id="editIdBanner">
                     <div class="mb-3">
-                        <label for="editImagemBanner" class="form-label">Imagem</label>
-                        <input type="file" class="form-control" id="editImagemBanner" name="imagem">
+                        <label for="editNomeImagem" class="form-label">Imagem</label>
+                        <select class="form-select" id="editNomeImagem" name="nomeImagem" required>
+                            <?php
+                                include_once("../classe/ListarImagens.php");
+                                $listarImagens = new ListarImagens();
+                                $imagens = $listarImagens->listarImagens('banners');
+                                foreach ($imagens as $imagem) {
+                                    echo "<option value=\"{$imagem['nameImage']}\">{$imagem['nameImage']}</option>";
+                                }
+                            ?>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="editSituacaoBanner" class="form-label">Situação</label>
@@ -108,7 +119,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idBan
                             <option value='DESATIVO'>DESATIVO</option>
                         </select>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="editar" class="btn btn-dark form-control">Salvar alterações</button>
@@ -117,20 +127,23 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idBan
         </div>
     </div>
 </div>
+
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.bi-pencil').forEach(button => {
-    button.addEventListener('click', function () {
+        button.addEventListener('click', function () {
+            document.getElementById('editIdBanner').value = this.dataset.id;
+            document.getElementById('editSituacaoBanner').value = this.dataset.situacao;
+            document.getElementById('editImagemBanner').value = this.dataset.idImage;
 
-        document.getElementById('editIdBanner').value = this.dataset.id;
-        document.getElementById('editSituacaoBanner').value = this.dataset.situacao;
-
-        const modal = new bootstrap.Modal(document.getElementById('editBannerModal'));
-        modal.show();
+            const modal = new bootstrap.Modal(document.getElementById('editBannerModal'));
+            modal.show();
+        });
     });
 });
-});
 </script>
+
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -149,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </div>
+
 <!-- Script para confirmar e processar exclusão -->
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -163,6 +177,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 </script>
+
 <!-- Mostrar dados -->
 <div class="section">
     <div class="container">
@@ -180,6 +195,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         </div>
     </div>
 </div>
+
 <!-- Paginação -->
 <div class="section">
     <div class="container">
