@@ -11,8 +11,11 @@ class MostrarBanners extends MinhaConexao
     public function mostrarBanners()
     {
         try {
-            // Consulta para obter os banners ativos
-            $sql = "SELECT * FROM banners WHERE (statusBanner = 'ATIVO' AND deletedBanner = 0)";
+            // Consulta para obter os banners ativos e suas imagens associadas
+            $sql = "SELECT banners.*, images.urlImage 
+                    FROM banners 
+                    INNER JOIN images ON banners.idImage = images.idImage 
+                    WHERE banners.statusBanner = 'ATIVO' AND banners.deletedBanner = 0";
             $resultado = $this->execSql($sql);
 
             // Verifica se há banners
@@ -24,7 +27,7 @@ class MostrarBanners extends MinhaConexao
                 while ($banner = mysqli_fetch_assoc($resultado)) {
                     $classe = $ativa ? 'carousel-item active' : 'carousel-item';
                     $html .= '<div class="' . $classe . '">
-                                 <img src="' . $banner['urlBanner'] . '" class="d-block w-100 full-screen-banner" alt="Imagem do Banner">
+                                 <img src="' . $banner['urlImage'] . '" class="d-block w-100 full-screen-banner" alt="Imagem do Banner">
                              </div>';
                     $ativa = false;
                 }
@@ -50,4 +53,5 @@ class MostrarBanners extends MinhaConexao
         }
     }
 }
+
 ?>

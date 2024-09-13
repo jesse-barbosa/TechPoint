@@ -17,15 +17,10 @@
                 </a>
                 <div class="dropdown">
                     <button class="btn btn-link p-0" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?php
-                            include_once("../classe/MostrarIconeUsuario.php");
-                            $icons = new MostrarIconeUsuario();
-                            $icons->mostrarIcone($_SESSION['idUser']);
-                        ?>
+                    <img src='../img/icons/icon1.png' height='40' />
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton">
-                        <li><h6 class="dropdown-header"><?php echo htmlspecialchars($_SESSION['nome']); ?></h6></li>
-                        <li><p class="dropdown-item-text"><?php echo htmlspecialchars($_SESSION['email']); ?></p></li>
+                        <li><h6 class="dropdown-header mb-4"><?php echo htmlspecialchars($_SESSION['nome']); ?></h6></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../funcao/logout.php">Sair</a></li>
                     </ul>

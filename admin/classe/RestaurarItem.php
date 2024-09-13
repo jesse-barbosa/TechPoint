@@ -35,7 +35,7 @@ class RestaurarItem extends MinhaConexao {
 
             // Verificar se a atualização foi bem-sucedida
             if ($stmt->affected_rows > 0) {
-                echo "Item restaurado com sucesso.";
+                echo "<script>window.location.href = 'index.php?tela=listarLixeira';</script>";
             } else {
                 echo "Erro ao restaurar item.";
             }
@@ -50,7 +50,7 @@ class RestaurarItem extends MinhaConexao {
 if (isset($_GET['id']) && isset($_GET['tipo'])) {
     $restaurar = new RestaurarItem();
     $restaurar->restaurarItem($_GET['id'], $_GET['tipo']);
-    header("Location: listarLixeira.php?restaurado=1");
+    echo "<script>window.location.href = 'index.php?tela=listarLixeira?restaurado=1';</script>";
     exit();
 }
 ?>

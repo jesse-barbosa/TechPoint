@@ -14,7 +14,7 @@ if (isset($_POST['enviar'])) {
     if (isset($_FILES['url']) && $_FILES['url']['error'] === UPLOAD_ERR_OK) {
         $imagem = $_FILES['url'];
         $adicionarImagem = new AdicionarImagem();
-        $adicionarImagem->adicionarImagem($imagem, $name, $type, $situacao);
+        $adicionarImagem->adicionarImagem($name, $imagem, $type, $situacao);
     } else {
         echo "Imagem não foi enviada ou ocorreu um erro no upload.";
     }
@@ -79,9 +79,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idIma
                                     </select>
                                 </div>
                                 <div class="text-start px-1 py-1 mb-1">
-                                    <label for="editUrlImage" class="form-label">URL da Imagem</label>
-                                    <input type="file" name="url" class="input py-1" required>
-                                </div>
+                                <label for="editUrlImage" class="form-label">Imagem</label>
+                                <input type="file" class="form-control" id="editUrlImage" name="url">
+                            </div>
                                 <div class="text-start px-1 py-1 mb-1">
                                     <label for="editStatusImage" class="form-label">Situação</label>
                                     <select name="situacao" class="form-select" required>
@@ -154,9 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('editNameImage').value = this.dataset.name;
             document.getElementById('editTypeImage').value = this.dataset.type;
             document.getElementById('editStatusImage').value = this.dataset.status;
-
-            // Não define o valor do campo file para evitar problemas de segurança
-            // document.getElementById('editUrlImage').value = this.dataset.url; // Comentado intencionalmente
 
             const modal = new bootstrap.Modal(document.getElementById('editImageModal'));
             modal.show();

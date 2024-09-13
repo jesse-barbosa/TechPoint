@@ -1,8 +1,8 @@
 <?php
+// Verifica o tipo do usuário
 if (!isset($_SESSION['typeUser']) || $_SESSION['typeUser'] !== 'admin-master') {
-    echo "<script>alert('Você não tem permissão para acessar esta página! Apenas administradores-master podem acessar.');</script>";
-    header("Location: index.php?tela=home");
-    exit();
+    echo "<script>alert('Você não tem permissão para acessar esta página! Apenas administradores-master podem acessar.'); window.location.href = 'index.php';</script>";
+    die();
 }
 
 include_once("../classe/ApagarItem.php");

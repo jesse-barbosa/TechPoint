@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 <div class="table-responsive">
                     <?php
                         include_once("../classe/MostrarCategorias.php");
-                        $categorias = new MostrarCategoria();
+                        $categorias = new MostrarCategorias();
                         $categorias->setNumPagina(@$_GET['pg']);
                         $categorias->setUrl("?tela=cadListarCategoria");
                         $categorias->setSessao('');

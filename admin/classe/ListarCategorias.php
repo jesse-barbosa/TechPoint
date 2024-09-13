@@ -1,27 +1,26 @@
 <?php
 include_once("MinhaConexao.php");
 
-class ListarImagens extends MinhaConexao {
-    public function listarImagens(): array
+class ListarCategorias extends MinhaConexao {
+    public function listarCategorias(): array
     {
         try {
-            $sql = "SELECT idImage, nameImage, urlImage FROM images WHERE deletedImage = 0";
+            $sql = "SELECT idCategory, nameCategory FROM categories WHERE deletedCategory = 0";
             $resultado = self::execSql($sql);
-    
+
             if (mysqli_num_rows($resultado) > 0) {
-                $imagens = [];
+                $categorias = [];
                 while ($row = mysqli_fetch_assoc($resultado)) {
-                    $imagens[] = $row;
+                    $categorias[] = $row;
                 }
-                return $imagens;
+                return $categorias;
             } else {
                 return [];
             }
         } catch (Exception $e) {
-            echo "Erro ao listar imagens: " . $e->getMessage();
+            echo "Erro ao listar categorias: " . $e->getMessage();
             return [];
         }
     }
-    
 }
 ?>

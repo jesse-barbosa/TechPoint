@@ -45,66 +45,109 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
             </div>
             <div class="col-3 text-end">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-dark fw-medium" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" class="btn btn-dark fw-medium" data-bs-toggle="modal" data-bs-target="#addProductModal">
                     Adicionar
                 </button>
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <!-- Modal de Adicionar Produto -->
+                <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header border-0">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo item</h1>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addProductModalLabel">Adicionar Novo Produto</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="index.php?tela=cadListarProduto" method="post" enctype="multipart/form-data">
+                            <form method="POST" action="" enctype="multipart/form-data">
                                 <div class="modal-body">
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="text" name="nome" class="input border-0 py-1" placeholder="Nome" required>
+
+                                    <!-- Nome do Produto -->
+                                    <div class="mb-3 text-start">
+                                        <label for="nomeProduto" class="form-label">Nome do Produto:</label>
+                                        <input type="text" name="nomeProduto" id="nomeProduto" class="form-control" required>
                                     </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="file" name="imagem" class="input border-0 py-1" required>
-                                    </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="text" name="descricao" class="input border-0 py-1" placeholder="Descrição" required>
-                                    </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="number" name="quantidade" class="input border-0 py-1" placeholder="Quantidade em Estoque" required>
-                                    </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="number" name="preco" class="input border-0 py-1" placeholder="Preço" step="0.01" required>
-                                    </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <select name="categoria" class="form-select border-0" required>
-                                            <option value='1'>Processadores</option>
-                                            <option value='2'>Placas Mãe</option>
-                                            <option value='3'>Memórias RAM</option>
-                                            <option value='4'>Armazenamento</option>
-                                            <option value='5'>Placas de Vídeo</option>
+                                    <!-- Seleção da Imagem -->
+                                    <div class="mb-3 text-start">
+                                        <label for="idImage" class="form-label">Selecione a Imagem:</label>
+                                        <select name="idImage" id="idImage" class="form-select" required>
+                                            <option value="" disabled selected>Escolha uma imagem</option>
+                                            <?php
+                                                include_once("../classe/ListarImagens.php");
+                                                $listarImagens = new ListarImagens();
+                                                $imagens = $listarImagens->listarImagens();
+                                                foreach ($imagens as $imagem) {
+                                                    echo "<option value='" . htmlspecialchars($imagem['idImage']) . "'>" . htmlspecialchars($imagem['nameImage']) . "</option>";
+                                                }
+                                            ?>
                                         </select>
                                     </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <select name="subcategoria" class="form-select border-0" required>
-                                            <option value='1'>Intel</option>
-                                            <option value='2'>AMD</option>
-                                            <option value='3'>ATX</option>
-                                            <option value='4'>Micro-ATX</option>
-                                            <option value='5'>DDR4</option>
-                                            <option value='6'>DDR5</option>
-                                            <option value='7'>HD</option>
-                                            <option value='8'>SSD</option>
-                                            <option value='9'>NVIDIA</option>
+                                    <!-- Descrição do Produto -->
+                                    <div class="mb-3 text-start">
+                                        <label for="descricaoProduto" class="form-label">Descrição do Produto:</label>
+                                        <textarea name="descricaoProduto" id="descricaoProduto" class="form-control" rows="3" required></textarea>
+                                    </div>
+
+                                    <!-- Quantidade do Produto -->
+                                    <div class="mb-3 text-start">
+                                        <label for="quantidadeProduto" class="form-label">Quantidade do Produto:</label>
+                                        <input type="number" name="quantidadeProduto" id="quantidadeProduto" class="form-control" required>
+                                    </div>
+
+                                    <!-- Preço do Produto -->
+                                    <div class="mb-3 text-start">
+                                        <label for="precoProduto" class="form-label">Preço do Produto:</label>
+                                        <input type="number" name="precoProduto" id="precoProduto" class="form-control" step="0.01" required>
+                                    </div>
+
+                                    <!-- Categoria do Produto -->
+                                    <div class="mb-3 text-start">
+                                        <label for="categoriaProduto" class="form-label">Categoria do Produto:</label>
+                                        <select name="categoriaProduto" id="categoriaProduto" class="form-select text-dark" required>
+                                            <option value="" disabled selected>Escolha uma categoria</option>
+                                            <?php
+                                                // Inclua a lista de categorias aqui
+                                                include_once("../classe/ListarCategorias.php");
+                                                $listarCategorias = new ListarCategorias();
+                                                $categorias = $listarCategorias->listarCategorias();
+                                                foreach ($categorias as $categoria) {
+                                                    echo "<option value='" . htmlspecialchars($categoria['idCategory']) . "' class='text-dark'>" . htmlspecialchars($categoria['nameCategory']) . "</option>";
+                                                }
+                                            ?>
                                         </select>
                                     </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <select name="situacao" class="form-select border-0" required>
-                                            <option value='ATIVO'>ATIVO</option>
-                                            <option value='DESATIVO'>DESATIVO</option>
+
+                                    <!-- Subcategoria do Produto -->
+                                    <div class="mb-3 text-start">
+                                        <label for="subcategoriaProduto" class="form-label">Subcategoria do Produto:</label>
+                                        <select name="subcategoriaProduto" id="subcategoriaProduto" class="form-select text-dark" required>
+                                            <option value="" disabled selected>Escolha uma subcategoria</option>
+                                            <?php
+                                                // Inclua a lista de subcategorias aqui
+                                                include_once("../classe/ListarSubcategorias.php");
+                                                $listarSubcategorias = new ListarSubcategorias();
+                                                $subcategorias = $listarSubcategorias->listarSubcategorias();
+                                                foreach ($subcategorias as $subcategoria) {
+                                                    echo "<option value='" . htmlspecialchars($subcategoria['idSubCategory']) . "'>" . htmlspecialchars($subcategoria['nameSubCategory']) . "</option>";
+                                                }
+                                            ?>
                                         </select>
+                                    </div>
+
+                                    <!-- Situação do Produto -->
+                                    <div class="mb-3 text-start">
+                                        <label for="situacaoProduto" class="form-label">Situação do Produto:</label>
+                                        <select name="situacaoProduto" id="situacaoProduto" class="form-select" required>
+                                            <option value="" disabled selected>Escolha a situação</option>
+                                            <option value="ativo">Ativo</option>
+                                            <option value="inativo">Inativo</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Preview da Imagem -->
+                                    <div class="mb-3 text-start">
+                                        <img id="imagemPreview" src="" class="img-fluid" alt="Preview da Imagem Selecionada">
                                     </div>
                                 </div>
-                                <div class="modal-footer border-0">
-                                    <button type="submit" name="enviar" class="btn btn-dark form-control fw-medium">Adicionar</button>
+                                <div class="modal-footer">
+                                    <button type="submit" name="enviar" class="btn btn-dark">Adicionar Produto</button>
                                 </div>
                             </form>
                         </div>
@@ -144,7 +187,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
         </div>
     </div>
 </div>
-<!-- Modal de Edição -->
+<!-- Modal de Edição de Produto -->
 <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -152,69 +195,104 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
                 <h5 class="modal-title" id="editProductModalLabel">Editar Produto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="index.php?tela=cadListarProduto" method="post" enctype="multipart/form-data" id="editProductForm">
+            <form method="POST" action="">
                 <div class="modal-body">
-                    <input type="hidden" name="idProduto" id="editIdProduto">
-                    <div class="mb-3">
-                        <label for="editNomeProduto" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="editNomeProduto" name="nome" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editDescricaoProduto" class="form-label">Descrição</label>
-                        <input type="text" class="form-control" id="editDescricaoProduto" name="descricao" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editQuantidadeProduto" class="form-label">Quantidade</label>
-                        <input type="number" class="form-control" id="editQuantidadeProduto" name="quantidade" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editPrecoProduto" class="form-label">Preço</label>
-                        <input type="number" class="form-control" id="editPrecoProduto" name="preco" step="0.01" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editCategoriaProduto" class="form-label">Categoria</label>
-                        <select class="form-select" id="editCategoriaProduto" name="categoria" required>
-                            <option value='1'>Processadores</option>
-                            <option value='2'>Placas Mãe</option>
-                            <option value='3'>Memórias RAM</option>
-                            <option value='4'>Armazenamento</option>
-                            <option value='5'>Placas de Vídeo</option>
+                    <input type="hidden" id="editIdProduto" name="idProduto">
+
+                    <!-- Seleção da Imagem -->
+                    <div class="mb-3 text-start">
+                        <label for="editIdImage" class="form-label">Selecione a Imagem:</label>
+                        <select name="idImage" id="editIdImage" class="form-select" required>
+                            <option value="" disabled selected>Escolha uma imagem</option>
+                            <?php
+                                include_once("../classe/ListarImagens.php");
+                                $listarImagens = new ListarImagens();
+                                $imagens = $listarImagens->listarImagens();
+                                foreach ($imagens as $imagem) {
+                                    echo "<option value='" . htmlspecialchars($imagem['idImage']) . "' data-url='" . htmlspecialchars($imagem['urlImage']) . "'>" . htmlspecialchars($imagem['nameImage']) . "</option>";
+                                }
+                            ?>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="editSubcategoriaProduto" class="form-label">Subcategoria</label>
-                        <select class="form-select" id="editSubcategoriaProduto" name="subcategoria" required>
-                            <option value='1'>Intel</option>
-                            <option value='2'>AMD</option>
-                            <option value='3'>ATX</option>
-                            <option value='4'>Micro-ATX</option>
-                            <option value='5'>DDR4</option>
-                            <option value='6'>DDR5</option>
-                            <option value='7'>HD</option>
-                            <option value='8'>SSD</option>
-                            <option value='9'>NVIDIA</option>
+
+                    <!-- Nome do Produto -->
+                    <div class="mb-3 text-start">
+                        <label for="editNomeProduto" class="form-label">Nome do Produto:</label>
+                        <input type="text" name="nomeProduto" id="editNomeProduto" class="form-control" required>
+                    </div>
+
+                    <!-- Descrição do Produto -->
+                    <div class="mb-3 text-start">
+                        <label for="editDescricaoProduto" class="form-label">Descrição do Produto:</label>
+                        <textarea name="descricaoProduto" id="editDescricaoProduto" class="form-control" rows="3" required></textarea>
+                    </div>
+
+                    <!-- Quantidade do Produto -->
+                    <div class="mb-3 text-start">
+                        <label for="editQuantidadeProduto" class="form-label">Quantidade do Produto:</label>
+                        <input type="number" name="quantidadeProduto" id="editQuantidadeProduto" class="form-control" required>
+                    </div>
+
+                    <!-- Preço do Produto -->
+                    <div class="mb-3 text-start">
+                        <label for="editPrecoProduto" class="form-label">Preço do Produto:</label>
+                        <input type="number" name="precoProduto" id="editPrecoProduto" class="form-control" step="0.01" required>
+                    </div>
+
+                    <!-- Categoria do Produto -->
+                    <div class="mb-3 text-start">
+                        <label for="editCategoriaProduto" class="form-label">Categoria do Produto:</label>
+                        <select name="categoriaProduto" id="editCategoriaProduto" class="form-select" required>
+                            <option value="" disabled selected>Escolha uma categoria</option>
+                            <?php
+                                include_once("../classe/ListarCategorias.php");
+                                $listarCategorias = new ListarCategorias();
+                                $categorias = $listarCategorias->listarCategorias();
+                                foreach ($categorias as $categoria) {
+                                    echo "<option value='" . htmlspecialchars($categoria['idCategoria']) . "'>" . htmlspecialchars($categoria['nomeCategoria']) . "</option>";
+                                }
+                            ?>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="editSituacaoProduto" class="form-label">Situação</label>
-                        <select class="form-select" id="editSituacaoProduto" name="situacao" required>
-                            <option value='ATIVO'>ATIVO</option>
-                            <option value='DESATIVO'>DESATIVO</option>
+
+                    <!-- Subcategoria do Produto -->
+                    <div class="mb-3 text-start">
+                        <label for="editSubcategoriaProduto" class="form-label">Subcategoria do Produto:</label>
+                        <select name="subcategoriaProduto" id="editSubcategoriaProduto" class="form-select" required>
+                            <option value="" disabled selected>Escolha uma subcategoria</option>
+                            <?php
+                                include_once("../classe/ListarSubcategorias.php");
+                                $listarSubcategorias = new ListarSubcategorias();
+                                $subcategorias = $listarSubcategorias->listarSubcategorias();
+                                foreach ($subcategorias as $subcategoria) {
+                                    echo "<option value='" . htmlspecialchars($subcategoria['idSubcategoria']) . "'>" . htmlspecialchars($subcategoria['nomeSubcategoria']) . "</option>";
+                                }
+                            ?>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="editImagemProduto" class="form-label">Imagem</label>
-                        <input type="file" class="form-control" id="editImagemProduto" name="imagem">
+
+                    <!-- Situação do Produto -->
+                    <div class="mb-3 text-start">
+                        <label for="editSituacaoProduto" class="form-label">Situação do Produto:</label>
+                        <select name="situacaoProduto" id="editSituacaoProduto" class="form-select" required>
+                            <option value="" disabled selected>Escolha a situação</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
+
+                    <!-- Preview da Imagem Selecionada -->
+                    <div class="mb-3 text-start">
+                        <img id="editImagemPreview" src="" class="img-fluid" alt="Preview da Imagem Selecionada">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="editar" class="btn btn-dark form-control">Salvar alterações</button>
+                    <button type="submit" name="editar" class="btn btn-dark">Salvar Alterações</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -228,46 +306,77 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-dark" id="confirmDelete">Excluir</button>
+                <a href="" id="confirmDeleteProduct" class="btn btn-dark">Excluir</a>
             </div>
         </div>
     </div>
 </div>
-
 <script>
-document.addEventListener('DOMContentLoaded', (event) => {
-    // Preenchimento do modal de edição
-    document.querySelectorAll('.bi-pencil').forEach(button => {
-        button.addEventListener('click', function () {
+    document.addEventListener('DOMContentLoaded', () => {
+        // Configuração do Modal de Edição
+        document.querySelectorAll('.bi-pencil').forEach(button => {
+            button.addEventListener('click', function () {
+                const idProduto = this.dataset.id;
+                const nomeProduto = this.dataset.nome;
+                const precoProduto = this.dataset.preco;
+                const descricaoProduto = this.dataset.descricao;
+                const quantidadeProduto = this.dataset.quantidade;
+                const idImage = this.dataset.idimage;
+                const urlImagem = this.dataset.url;
+                const categoriaProduto = this.dataset.categoria;
+                const subcategoriaProduto = this.dataset.subcategoria;
+                const situacaoProduto = this.dataset.situacao;
 
-            document.getElementById('editIdProduto').value = this.dataset.id;
-            document.getElementById('editNomeProduto').value = this.dataset.nome;
-            document.getElementById('editDescricaoProduto').value = this.dataset.descricao;
-            document.getElementById('editQuantidadeProduto').value = this.dataset.quantidade;
-            document.getElementById('editPrecoProduto').value = this.dataset.preco;
-            document.getElementById('editCategoriaProduto').value = this.dataset.categoria;
-            document.getElementById('editSubcategoriaProduto').value = this.dataset.subcategoria;
-            document.getElementById('editSituacaoProduto').value = this.dataset.situacao;
+                // Preencher os campos do modal com os valores
+                document.getElementById('editIdProduto').value = idProduto;
+                document.getElementById('editNomeProduto').value = nomeProduto;
+                document.getElementById('editPrecoProduto').value = precoProduto;
+                document.getElementById('editDescricaoProduto').value = descricaoProduto;
+                document.getElementById('editQuantidadeProduto').value = quantidadeProduto;
 
-            const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
-            modal.show();
+                // Atualizar o select de imagem
+                const selectImagem = document.getElementById('editIdImage');
+                const options = selectImagem.querySelectorAll('option');
+                let found = false;
+                options.forEach(option => {
+                    if (option.value === idImage) {
+                        option.selected = true;
+                        document.getElementById('editImagemPreview').src = urlImagem; // Mostrar a imagem selecionada
+                        found = true;
+                    }
+                });
+
+                if (!found) {
+                    document.getElementById('editImagemPreview').src = ''; // Limpar o preview se a imagem não for encontrada
+                }
+
+                // Atualizar os selects de categoria e subcategoria
+                document.getElementById('editCategoriaProduto').value = categoriaProduto;
+                document.getElementById('editSubcategoriaProduto').value = subcategoriaProduto;
+                document.getElementById('editSituacaoProduto').value = situacaoProduto;
+
+                // Abrir o modal de edição
+                const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
+                modal.show();
+            });
+        });
+
+        // Alterar preview da imagem ao trocar a seleção no modal de edição
+        document.getElementById('editIdImage').addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const url = selectedOption.dataset.url;
+            document.getElementById('editImagemPreview').src = url;
+        });
+
+        // Configuração do Modal de Exclusão
+        document.querySelectorAll('.bi-trash').forEach(button => {
+            button.addEventListener('click', function () {
+                const deleteId = this.dataset.id;
+                const confirmDeleteButton = document.getElementById('confirmDeleteProduct');
+                confirmDeleteButton.href = 'index.php?tela=cadListarProdutos&action=delete&idProduto=' + deleteId;
+                const modal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
+                modal.show();
+            });
         });
     });
-
-    // Confirmação de exclusão
-    let deleteId = '';
-    document.querySelectorAll('.bi-trash').forEach(button => {
-        button.addEventListener('click', function () {
-            deleteId = this.dataset.id;
-            const modal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
-            modal.show();
-        });
-    });
-
-    document.getElementById('confirmDelete').addEventListener('click', function () {
-        if (deleteId) {
-            window.location.href = 'index.php?tela=cadListarProduto&action=delete&idProduto=' + deleteId;
-        }
-    });
-});
 </script>

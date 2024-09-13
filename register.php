@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST["enviar"])) {
       border-radius: 10px;
       backdrop-filter: blur(10px);
       padding: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
     }
     </style>
 </head>

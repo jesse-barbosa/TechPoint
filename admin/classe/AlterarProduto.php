@@ -21,25 +21,24 @@ class AlterarProduto extends MinhaConexao {
             echo "Erro ao obter produto: " . $e->getMessage();
         }
     }
-
-    public function alterarProduto($idProduto, $nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $caminhoImagem = null) {
+    public function alterarProduto($idProduto, $nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $idImage = null) {
         try {
-            if ($caminhoImagem) {
-                $sql = "UPDATE products SET nameProduct = ?, descProduct = ?, quantProduct = ?, priceProduct = ?, idCategory = ?, idSubCategory = ?, statusProduct = ?, imageProduct = ? WHERE idProduct = ?";
+            if ($idImage) {
+                $sql = "UPDATE products SET nameProduct = ?, descProduct = ?, quantProduct = ?, priceProduct = ?, idCategory = ?, idSubCategory = ?, statusProduct = ?, idImage = ? WHERE idProduct = ?";
             } else {
                 $sql = "UPDATE products SET nameProduct = ?, descProduct = ?, quantProduct = ?, priceProduct = ?, idCategory = ?, idSubCategory = ?, statusProduct = ? WHERE idProduct = ?";
             }
-
+    
             $stmt = $this->conn->prepare($sql);
-
-            if ($caminhoImagem) {
-                $stmt->bind_param("ssidsissi", $nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $caminhoImagem, $idProduto);
+    
+            if ($idImage) {
+                $stmt->bind_param("ssidsissi", $nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $idImage, $idProduto);
             } else {
                 $stmt->bind_param("ssidsisi", $nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $idProduto);
             }
-
+    
             if ($stmt->execute()) {
-                // Sucesso ao alterar categoria
+                // Sucesso ao alterar produto
             } else {
                 echo "Erro ao atualizar produto: " . $stmt->error;
             }
@@ -47,5 +46,6 @@ class AlterarProduto extends MinhaConexao {
             echo "Erro: " . $e->getMessage();
         }
     }
+    
 }
 ?>

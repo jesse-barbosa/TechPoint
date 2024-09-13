@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Set-2024 às 17:27
+-- Tempo de geração: 13-Set-2024 às 22:15
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -80,10 +80,7 @@ INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusC
 (3, 'Memorias RAM', 'Memória de acesso aleatório usada para armazenar dados temporários', 'ATIVO', 0),
 (4, 'Armazenamento', 'Dispositivos de armazenamento como HDs e SSDs', 'ATIVO', 0),
 (5, 'Placas de Video', 'Unidades de processamento gráfico (GPU)', 'ATIVO', 0),
-(6, 'Gabinete', 'Essa peÃ§a guarda todas as peÃ§as do seu PC', 'ativo', 1),
-(7, 'Xeon', 'Processadores da Xeon', 'ATIVO', 1),
-(10, 'testes', 'testes', 'ATIVO', 1),
-(11, 'teste', 'teste', 'ATIVO', 1);
+(7, 'Xeon', 'Processadores da Xeon', 'ATIVO', 1);
 
 -- --------------------------------------------------------
 
@@ -153,7 +150,16 @@ CREATE TABLE `images` (
 INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `statusImage`, `deletedImage`) VALUES
 (1, 'Primeiro Banner', '/TechPoint/img/banners/banner1.jpg', 'banners', 'ATIVO', 0),
 (2, 'Segundo Banner', '/TechPoint/img/banners/banner2.jpg', 'banners', 'ATIVO', 0),
-(3, 'Terceiro Banner', '/TechPoint/img/products/banner3.jpg', 'banners', 'ATIVO', 0);
+(4, 'Array', 'Terceiro Banner', 'banners', 'ATIVO', 1),
+(5, 'Array', 'Terceiro Banner', 'banners', 'ATIVO', 1),
+(6, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
+(7, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
+(8, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
+(9, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
+(10, 'Terceiro Banner', 'Array', 'banners', 'ATIVO', 1),
+(11, 'Terceiro Banner', '/TechPoint/img/banners/banner3.jpg', 'banners', 'ATIVO', 1),
+(12, 'Terceiro Banner', '/TechPoint/img/banners/banner3.jpg', 'banners', 'ATIVO', 0),
+(13, 'i5 12400', '/TechPoint/img/products/processador_intel_i5.jpg', 'products', 'ATIVO', 0);
 
 -- --------------------------------------------------------
 
@@ -227,7 +233,6 @@ CREATE TABLE `users` (
   `nameUser` char(20) NOT NULL,
   `emailUser` char(60) NOT NULL,
   `passwordUser` char(60) NOT NULL,
-  `iconUser` char(100) NOT NULL DEFAULT '/TechPoint/img/icons/icon1.png',
   `statusUser` char(10) NOT NULL DEFAULT 'ATIVO',
   `typeUser` char(12) NOT NULL DEFAULT 'default',
   `deletedUser` tinyint(1) NOT NULL DEFAULT 0
@@ -237,9 +242,9 @@ CREATE TABLE `users` (
 -- Extraindo dados da tabela `users`
 --
 
-INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `iconUser`, `statusUser`, `typeUser`, `deletedUser`) VALUES
-(5, 'admin-master', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'admin-master', 0),
-(35, 'Jesse Barbosa', 'barbosajesse419@gmail.com', '1234', '/TechPoint/img/icons/icon1.png', 'ATIVO', 'default', 0);
+INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `statusUser`, `typeUser`, `deletedUser`) VALUES
+(5, 'admin-master', 'barbosajesse419@gmail.com', '1234', 'ATIVO', 'admin-master', 0),
+(35, 'Jesse Barbosa', 'barbosajesse419@gmail.com', '1234', 'ATIVO', 'default', 0);
 
 --
 -- Índices para tabelas despejadas
@@ -303,7 +308,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `banners`
 --
 ALTER TABLE `banners`
-  MODIFY `idBanner` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idBanner` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de tabela `cart`
@@ -327,7 +332,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT de tabela `images`
 --
 ALTER TABLE `images`
-  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `products`

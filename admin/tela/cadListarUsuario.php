@@ -126,7 +126,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idUsu
             <div class="col table-responsive">
                 <?php
                     include_once("../classe/MostrarUsuarios.php");
-                    $usuarios = new MostrarUsuario();
+                    $usuarios = new MostrarUsuarios();
                     $usuarios->setNumPagina(@$_GET['pg']);
                     $usuarios->setUrl("?tela=cadListarUsuario");
                     $usuarios->setSessao('');

@@ -1,7 +1,7 @@
 <?php
 include_once("CriaPaginacao.php");
 
-class MostrarUsuario extends criaPaginacao {
+class MostrarUsuarios extends criaPaginacao {
     private $strNumPagina, $strUrl, $strSessao;
 
     public function setNumPagina($x) {
@@ -54,7 +54,6 @@ class MostrarUsuario extends criaPaginacao {
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Senha</th>
-                            <th>Ícone</th>
                             <th>Situação</th>
                             <th>Tipo</th>
                             <th width='30'></th>
@@ -70,7 +69,6 @@ class MostrarUsuario extends criaPaginacao {
                         echo "<td class='fw-lighter'>".$resultado['nameUser']."</td>";
                         echo "<td class='fw-lighter'>".$resultado['emailUser']."</td>";
                         echo "<td class='fw-lighter'>".$resultado['passwordUser']."</td>";
-                        echo "<td class='fw-lighter'>".$resultado['iconUser']."</td>";
                         echo "<td class='fw-lighter'>".$resultado['statusUser']."</td>";
                         echo "<td class='fw-lighter'>".$resultado['typeUser']."</td>";
                         echo "<td><a href='#' class='bi bi-pencil btn btn-outline-dark' data-id='".$resultado['idUser']."' data-nome='".$resultado['nameUser']."' data-email='".$resultado['emailUser']."' data-situacao='".$resultado['statusUser']."' data-type='".$resultado['typeUser']."'></a></td>";

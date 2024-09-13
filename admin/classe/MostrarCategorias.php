@@ -1,7 +1,7 @@
 <?php
 include_once("CriaPaginacao.php");
 
-class MostrarCategoria extends CriaPaginacao {
+class MostrarCategorias extends CriaPaginacao {
     private $strNumPagina, $strUrl, $strSessao;
 
     public function setNumPagina($x) {

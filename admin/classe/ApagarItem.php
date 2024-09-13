@@ -35,7 +35,7 @@ class ApagarItem extends MinhaConexao {
 
             // Verificar se a exclusão foi bem-sucedida
             if ($stmt->affected_rows > 0) {
-                echo "Item excluído permanentemente.";
+                echo "<script>window.location.href = 'index.php?tela=listarLixeira';</script>";
             } else {
                 echo "Erro ao excluir item.";
             }
@@ -50,7 +50,8 @@ class ApagarItem extends MinhaConexao {
 if (isset($_GET['id']) && isset($_GET['tipo'])) {
     $apagar = new ApagarItem();
     $apagar->apagarItem($_GET['id'], $_GET['tipo']);
-    header("Location: listarLixeira.php?apagado=1");
+    echo "<script>window.location.href = 'index.php?tela=listarLixeira?apagado=1';</script>";
+
     exit();
 }
 ?>
