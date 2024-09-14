@@ -11,7 +11,7 @@ class ApagarImagem extends MinhaConexao {
             $stmt->execute();
 
             if ($stmt->affected_rows > 0) {
-                echo "Imagem apagada com sucesso!";
+            echo "<script>alert('Imagem apagada com sucesso!');window.location.href = 'index.php?tela=cadListarImagens'</script>";
             } else {
                 echo "Erro ao apagar a imagem.";
             }

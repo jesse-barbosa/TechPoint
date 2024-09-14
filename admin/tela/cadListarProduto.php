@@ -3,6 +3,8 @@ include_once("../classe/AlterarProduto.php");
 include_once("../classe/UploadImagem.php");
 // Adicionar Produto
 include_once("../classe/AdicionarProduto.php");
+// Apagar Produto
+include_once("../classe/ApagarProduto.php");
 
 if (isset($_POST['enviar'])) {
     $nome = $_POST['nomeProduto'];
@@ -38,17 +40,14 @@ if (isset($_POST['editar'])) {
     $produto->alterarProduto($idProduto, $nome, $descricao, $quantidade, $preco, $categoria, $subcategoria, $situacao, $idImage);
 }
 
-// Apagar Produto
-include_once("../classe/ApagarProduto.php");
-
-if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idProduto'])) {
-    $idProduto = intval($_GET['idProduto']);
-    $apagarProduto = new ApagarProduto();
-    $apagarProduto->apagarProduto($idProduto);
+if (isset($_GET['id'])) {
+    $idProduto = $_GET['id'];
+    
+    $apagar = new ApagarProduto();
+    $apagar->apagarProduto($idProduto);
 }
 
 ?>
-
 <!-- Cadastro de dados -->
 <div class="section mt-2 mb-4">
     <div class="container">
@@ -157,10 +156,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
                                             <option value="INATIVO">Inativo</option>
                                         </select>
                                     </div>
-                                    <!-- Preview da Imagem -->
-                                    <div class="mb-3 text-start">
-                                        <img id="imagemPreview" src="" class="img-fluid" alt="Preview da Imagem Selecionada">
-                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" name="enviar" class="btn btn-dark">Adicionar Produto</button>
@@ -173,7 +168,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
         </div>
     </div>
 </div>
-
 <!-- Mostrar dados -->
 <div class="section">
     <div class="container-fluid">
@@ -203,6 +197,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
         </div>
     </div>
 </div>
+
 <!-- Modal de Edição de Produto -->
 <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -289,8 +284,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
                         <label for="editSituacaoProduto" class="form-label">Situação do Produto:</label>
                         <select name="situacaoProduto" id="editSituacaoProduto" class="form-select" required>
                             <option value="" disabled selected>Escolha a situação</option>
-                            <option value="ativo">Ativo</option>
-                            <option value="inativo">Inativo</option>
+                            <option value="ATIVO">Ativo</option>
+                            <option value="INATIVO">Inativo</option>
                         </select>
                     </div>
                 </div>
@@ -303,26 +298,25 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idPro
 </div>
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmar Exclusão</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Tem certeza de que deseja excluir este produto?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</button>
-                <a href="" id="confirmDeleteProduct" class="btn btn-dark">Excluir</a>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Você tem certeza que deseja excluir este produto?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-dark" id="confirmDelete">Excluir</button>
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Configuração do Modal de Edição
     document.querySelectorAll('.bi-pencil').forEach(button => {
         button.addEventListener('click', function () {
             const idProduto = this.dataset.id;
@@ -338,54 +332,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById('editIdProduto').value = idProduto;
             document.getElementById('editNomeProduto').value = nomeProduto;
-            document.getElementById('editUrlProduto').value = urlProduto;
             document.getElementById('editPrecoProduto').value = precoProduto;
             document.getElementById('editDescricaoProduto').value = descricaoProduto;
             document.getElementById('editQuantidadeProduto').value = quantidadeProduto;
 
             // Atualizar o preview da imagem
-            const selectImagem = document.getElementById('editNomeImagem');
+            const selectImagem = document.getElementById('editIdImage');
             const options = selectImagem.querySelectorAll('option');
             let found = false;
             options.forEach(option => {
                 if (option.value === idImage) {
                     option.selected = true;
-                    document.getElementById('editImagemPreview').src = urlImagem; // Mostrar a imagem selecionada
+                    document.getElementById('editImagemPreview').src = urlImagem;
                     found = true;
                 }
             });
 
             if (!found) {
-                document.getElementById('editImagemPreview').src = ''; // Limpar o preview se a imagem não for encontrada
+                document.getElementById('editImagemPreview').src = '';
             }
 
-            // Atualizar os selects de categoria e subcategoria
             document.getElementById('editCategoriaProduto').value = categoriaProduto;
             document.getElementById('editSubcategoriaProduto').value = subcategoriaProduto;
             document.getElementById('editSituacaoProduto').value = situacaoProduto;
 
-            // Abrir o modal de edição
             const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
             modal.show();
         });
     });
 
-    // Alterar preview da imagem ao trocar a seleção no modal de edição
-    document.getElementById('editNomeImagem').addEventListener('change', function () {
+        document.getElementById('editIdImage').addEventListener('change', function () {
         const selectedOption = this.options[this.selectedIndex];
         const url = selectedOption.dataset.url;
         document.getElementById('editImagemPreview').src = url;
     });
 
-    // Configuração do Modal de Exclusão
+    let deleteId = null;
+
     document.querySelectorAll('.bi-trash').forEach(button => {
         button.addEventListener('click', function () {
-            const deleteId = this.dataset.id;
-            const confirmDeleteButton = document.getElementById('confirmDeleteProduct');
-            confirmDeleteButton.href = 'index.php?tela=cadListarProduto&action=delete&idProduto=' + deleteId;
+            deleteId = this.dataset.id;
             const modal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
             modal.show();
         });
     });
+
+    document.getElementById('confirmDelete').addEventListener('click', function () {
+        if (deleteId) {
+            window.location.href = 'index.php?tela=cadListarProduto&action=delete&id=' + deleteId;
+        }
+    });
+    
 });
+
 </script>

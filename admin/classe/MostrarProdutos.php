@@ -86,7 +86,7 @@ public function mostrarProdutos() {
                     echo "<td class='fw-lighter'>".$resultado['idSubCategory']."</td>";
                     echo "<td class='fw-lighter'>".$resultado['statusProduct']."</td>";
                     echo "<td><a href='#' class='bi bi-pencil btn btn-outline-dark' data-bs-toggle='modal' data-bs-target='#editProductModal' data-id='".$resultado['idProduct']."' data-url='".$resultado['urlImage']."' data-nome='".$resultado['nameProduct']."' data-descricao='".$resultado['descProduct']."' data-quantidade='".$resultado['quantProduct']."' data-preco='".$resultado['priceProduct']."' data-categoria='".$resultado['idCategory']."' data-subcategoria='".$resultado['idSubCategory']."' data-situacao='".$resultado['statusProduct']."'></a></td>";
-                    echo "<td><a href='#' class='bi bi-trash btn btn-dark' data-bs-toggle='modal' data-bs-target='#deleteConfirmationModal' data-id='" . htmlspecialchars($resultado['idProduct']) . "'></a></td>";
+                    echo "<td><a href='#' class='bi bi-trash btn btn-dark' data-bs-toggle='modal' data-bs-target='#deleteConfirmationModal' data-id='" . $resultado['idProduct'] . "'></a></td>";
                 echo "</tr>";
             }
             echo "
