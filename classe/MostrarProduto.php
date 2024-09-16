@@ -10,7 +10,13 @@ class MostrarProduto extends criaPaginacao {
 
     public function mostrarProduto() {
         try {
-            $sql = "SELECT * FROM products WHERE (idProduct = ? AND deletedProduct = 0)";
+            // SQL com JOIN para obter informações do produto e da imagem
+            $sql = "
+                SELECT p.*, i.urlImage
+                FROM products p
+                JOIN images i ON p.idImage = i.idImage
+                WHERE p.idProduct = ? AND p.deletedProduct = 0
+            ";
             $stmt = $this->conectar->prepare($sql);
             $stmt->bind_param("i", $this->idProduct);
             $stmt->execute();
@@ -25,7 +31,7 @@ class MostrarProduto extends criaPaginacao {
                 echo "
                     <div class='col-6'>
                         <div class='w-50'>
-                            <img src='" . $resultado['imageProduct'] . "' class='h-100 p-5 card-img-top' alt='Foto Produto'>
+                            <img src='" . $resultado['urlImage'] . "' class='h-100 p-5 card-img-top' alt='Foto Produto'>
                         </div>
                     </div>
                     <div class='col-5'>

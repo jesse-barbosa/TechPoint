@@ -38,6 +38,8 @@ class MostrarProdutos extends criaPaginacao {
                 $sql .= " AND p.idCategory = " . intval($this->filtroCategoria);
             }
 
+            $sql .= " ORDER BY RAND()";
+
             $this->setParametro($this->strNumPagina);
             $this->setFileName($this->strUrl);
             $this->setInfoMaxPag(8);
@@ -53,12 +55,12 @@ class MostrarProdutos extends criaPaginacao {
                     $imagemProduto = $resultado['urlImage'];
                     
                     echo "
-                        <div class='col-4 col-md-4 col-lg-3 mb-3'>
+                        <div class='card shadow-none col-4 col-md-4 col-lg-3 mb-3'>
                             <a href='index.php?tela=viewProduct&id=" . htmlspecialchars($resultado['idProduct']) . "' class='link link-underline link-underline-opacity-0'>
                                 <div class='card shadow-none p-2 h-100'>
                                     <img src='" . htmlspecialchars($imagemProduto) . "' class='p-1 card-img-top' height='220' alt='Foto Produto'>
                                     <div class='card-body'>
-                                        <h5 class='card-title fw-bold'>" . htmlspecialchars($resultado['nameProduct']) . "</h5>    
+                                        <h5 class='card-title fw-semibold'>" . htmlspecialchars($resultado['nameProduct']) . "</h5>    
                                         <h5 class='card-title text-success fw-lighter'>R$" . htmlspecialchars(number_format($resultado['priceProduct'], 2, ',', '.')) . "</h5>    
                                     </div>
                                 </div>

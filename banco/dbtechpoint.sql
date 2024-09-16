@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/09/2024 às 01:55
+-- Tempo de geração: 16-Set-2024 às 13:15
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `banners`
+-- Estrutura da tabela `banners`
 --
 
 CREATE TABLE `banners` (
@@ -35,7 +35,7 @@ CREATE TABLE `banners` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `banners`
+-- Extraindo dados da tabela `banners`
 --
 
 INSERT INTO `banners` (`idBanner`, `idImage`, `statusBanner`, `deletedBanner`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `banners` (`idBanner`, `idImage`, `statusBanner`, `deletedBanner`) V
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cart`
+-- Estrutura da tabela `cart`
 --
 
 CREATE TABLE `cart` (
@@ -59,7 +59,7 @@ CREATE TABLE `cart` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `categories`
+-- Estrutura da tabela `categories`
 --
 
 CREATE TABLE `categories` (
@@ -71,7 +71,7 @@ CREATE TABLE `categories` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `categories`
+-- Extraindo dados da tabela `categories`
 --
 
 INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusCategory`, `deletedCategory`) VALUES
@@ -85,7 +85,7 @@ INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusC
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `contacts`
+-- Estrutura da tabela `contacts`
 --
 
 CREATE TABLE `contacts` (
@@ -100,7 +100,7 @@ CREATE TABLE `contacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci COMMENT='Tabela para salvar mensagens dos usuários.';
 
 --
--- Despejando dados para a tabela `contacts`
+-- Extraindo dados da tabela `contacts`
 --
 
 INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact`, `stateContact`, `subjectContact`, `messageContact`, `deletedContact`) VALUES
@@ -124,14 +124,11 @@ INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact
 (18, 'Tatiane Almeida', 'tatiane.almeida@email.com', 'Sorocaba', 'SP', 'Problema com pagamento', 'Estou enfrentando problemas para realizar o pagamento do meu pedido.', 0),
 (19, 'Eduardo Ribeiro', 'eduardo.ribeiro@email.com', 'Campinas', 'SP', 'Problemas com site', 'O site está apresentando erro ao tentar finalizar a compra.', 0),
 (20, 'Larissa Oliveira', 'larissa.oliveira@email.com', 'Ribeirão Preto', 'SP', 'Feedback sobre atendimento', 'Gostaria de deixar um feedback positivo sobre o atendimento que recebi.', 0),
-(21, 'JessÃ© Barbosa', 'barbosajesse419@gmail.com', 'TeÃ³filo Otoni', 'MG', 'Teste', 'Testando o Teste', 0),
-(22, 'JessÃ© Barbosa', 'barbosajesse419@gmail.com', 'TeÃ³filo Otoni', 'MG', 'Teste', 'Testando o Teste', 0),
-(23, 'JessÃ© Barbosa', 'barbosajesse419@gmail.com', 'TeÃ³filo Otoni', 'MG', 'Teste', 'Testando o Teste', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `images`
+-- Estrutura da tabela `images`
 --
 
 CREATE TABLE `images` (
@@ -144,7 +141,7 @@ CREATE TABLE `images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `images`
+-- Extraindo dados da tabela `images`
 --
 
 INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `statusImage`, `deletedImage`) VALUES
@@ -162,7 +159,7 @@ INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `statusIm
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `products`
+-- Estrutura da tabela `products`
 --
 
 CREATE TABLE `products` (
@@ -180,7 +177,7 @@ CREATE TABLE `products` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `products`
+-- Extraindo dados da tabela `products`
 --
 
 INSERT INTO `products` (`idProduct`, `nameProduct`, `idImage`, `descProduct`, `quantProduct`, `quantSoldProduct`, `priceProduct`, `idCategory`, `idSubCategory`, `statusProduct`, `deletedProduct`) VALUES
@@ -190,12 +187,12 @@ INSERT INTO `products` (`idProduct`, `nameProduct`, `idImage`, `descProduct`, `q
 (4, 'Memoria RAM DDR4 16G', 17, 'Memória RAM DDR4 16GB 3200MHz', 30, 0, 450, 3, 5, 'ATIVO', 0),
 (5, 'SSD Kingston 500GB', 18, 'SSD Kingston 500GB NVMe', 25, 0, 350, 4, 8, 'ATIVO', 0),
 (6, 'NVIDIA RTX 3060', 19, 'Placa de vídeo NVIDIA GeForce RTX 3060, 12GB GDDR6', 8, 0, 2400, 5, 9, 'ATIVO', 0),
-(27, 'Teste', 16, '0', 60, 0, 210, 1, 2, 'ativo', 0);
+(27, 'Teste', 16, '0', 60, 0, 210, 1, 2, 'ativo', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `subcategories`
+-- Estrutura da tabela `subcategories`
 --
 
 CREATE TABLE `subcategories` (
@@ -207,7 +204,7 @@ CREATE TABLE `subcategories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `subcategories`
+-- Extraindo dados da tabela `subcategories`
 --
 
 INSERT INTO `subcategories` (`idSubCategory`, `nameSubCategory`, `descSubCategory`, `statusSubCategory`, `deletedSubCategory`) VALUES
@@ -224,7 +221,7 @@ INSERT INTO `subcategories` (`idSubCategory`, `nameSubCategory`, `descSubCategor
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `users`
+-- Estrutura da tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -238,25 +235,26 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Despejando dados para a tabela `users`
+-- Extraindo dados da tabela `users`
 --
 
 INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `statusUser`, `typeUser`, `deletedUser`) VALUES
-(5, 'admin-master', 'barbosajesse419@gmail.com', '1234', 'ATIVO', 'admin-master', 0),
-(35, 'Jesse Barbosa', 'barbosajesse419@gmail.com', '1234', 'ATIVO', 'default', 0);
+(5, 'admin-master', 'admin@gmail.com', '1234', 'ATIVO', 'admin-master', 0),
+(35, 'Diego', 'diego@gmail.com', '1234', 'ATIVO', 'admin', 0),
+(36, 'Jessé Barbosa', 'barbosajesse419@gmail.com', '1234', 'ATIVO', 'admin', 0);
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `banners`
+-- Índices para tabela `banners`
 --
 ALTER TABLE `banners`
   ADD PRIMARY KEY (`idBanner`);
 
 --
--- Índices de tabela `cart`
+-- Índices para tabela `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`idCart`),
@@ -264,43 +262,43 @@ ALTER TABLE `cart`
   ADD KEY `product_id` (`product_id`);
 
 --
--- Índices de tabela `categories`
+-- Índices para tabela `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`idCategory`);
 
 --
--- Índices de tabela `contacts`
+-- Índices para tabela `contacts`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`idContact`);
 
 --
--- Índices de tabela `images`
+-- Índices para tabela `images`
 --
 ALTER TABLE `images`
   ADD PRIMARY KEY (`idImage`);
 
 --
--- Índices de tabela `products`
+-- Índices para tabela `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`idProduct`);
 
 --
--- Índices de tabela `subcategories`
+-- Índices para tabela `subcategories`
 --
 ALTER TABLE `subcategories`
   ADD PRIMARY KEY (`idSubCategory`);
 
 --
--- Índices de tabela `users`
+-- Índices para tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`idUser`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
@@ -349,7 +347,7 @@ ALTER TABLE `subcategories`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

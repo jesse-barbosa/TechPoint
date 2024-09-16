@@ -37,7 +37,7 @@
         ?>
     </div>
 
-    <h2 class="fw-lighter m-3">Produtos Relacionados</h2>
+    <h2 class="fw-lighter ms-3 my-5">Produtos Relacionados</h2>
     
     <!-- Seção com scroll horizontal -->
     <div class="related-products-container">

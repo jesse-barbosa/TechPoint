@@ -34,19 +34,29 @@ class MostrarRelacionados extends MinhaConexao {
     public function mostrarRelacionados()
     {
         try {
-            $sql = "SELECT * FROM products WHERE (idCategory = ? AND idProduct != ? AND deletedProduct = 0)";
+            // SQL com JOIN para obter informações do produto e da imagem
+            $sql = "
+                SELECT p.*, i.urlImage
+                FROM products p
+                JOIN images i ON p.idImage = i.idImage
+                WHERE p.idCategory = ? AND p.idProduct != ? AND p.deletedProduct = 0
+            ";
             $stmt = $this->conectar->prepare($sql);
             $stmt->bind_param("ii", $this->idCategory, $this->idProduct);
             $stmt->execute();
             $query = $stmt->get_result();
 
+            if (!$query) {
+                throw new Exception("Erro na execução da consulta: " . $this->conectar->error);
+            }
+
             if ($query->num_rows > 0) {
                 while ($resultado = $query->fetch_assoc()) {
                     echo "
-                    <div class='product-item mx-1'>
+                    <div class='product-item mx-5'>
                         <a href='index.php?tela=viewProduct&id=" . $resultado['idProduct'] . "' class='link link-underline link-underline-opacity-0'>
                             <div class='card shadow-none p-2'>
-                                <img src='" . $resultado['imageProduct'] . "' class='p-5 card-img-top' height='300' alt='Foto Produto'>
+                                <img src='" . $resultado['urlImage'] . "' class='p-2 card-img-top' height='300' alt='Foto Produto'>
                                 <div class='card-body'>
                                     <h5 class='card-title fw-bold'>" . $resultado['nameProduct'] . "</h5>    
                                     <h5 class='card-title text-success fw-bold'>R$" . $resultado['priceProduct'] . "</h5>    

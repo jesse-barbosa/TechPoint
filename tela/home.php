@@ -1,3 +1,17 @@
+<style>
+    .card {
+        color: gray !important;
+        opacity: 0.99;
+    }
+    .card:hover {
+        opacity: 1;
+        transform: scale(1.01);
+        color: black !important;
+    }
+    .card-img-top {
+        height: 300 !important;
+    }
+</style>
 <?php
     include_once("../classe/MostrarBanners.php");
     $banners = new MostrarBanners();

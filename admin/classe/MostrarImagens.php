@@ -27,7 +27,7 @@ class MostrarImagens extends CriaPaginacao {
             // Adicione a configuração da paginação
             $this->setParametro($this->strNumPagina);
             $this->setFileName($this->strUrl);
-            $this->setInfoMaxPag(6);
+            $this->setInfoMaxPag(5);
             $this->setMaximoLinks(9);
             $this->setSQL($sql);
             self::iniciaPaginacao();
