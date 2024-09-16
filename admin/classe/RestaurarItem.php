@@ -13,7 +13,7 @@ class RestaurarItem extends MinhaConexao {
                     $sql = "UPDATE categories SET deletedCategory = 0 WHERE idCategory = ?";
                     break;
                 case 'Sub Categoria':
-                    $sql = "UPDATE subcategories SET deletedSubcategory = 0 WHERE idSubcategory = ?";
+                    $sql = "UPDATE subcategories SET deletedSubCategory = 0 WHERE idSubCategory = ?";
                     break;
                 case 'Banner':
                     $sql = "UPDATE banners SET deletedBanner = 0 WHERE idBanner = ?";
@@ -23,6 +23,9 @@ class RestaurarItem extends MinhaConexao {
                     break;
                 case 'Contato':
                     $sql = "UPDATE contacts SET deletedContact = 0 WHERE idContact = ?";
+                    break;
+                case 'Imagem':
+                    $sql = "UPDATE images SET deletedImage = 0 WHERE idImage = ?";
                     break;
                 default:
                     throw new Exception("Tipo de item inválido.");

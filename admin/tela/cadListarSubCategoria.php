@@ -13,7 +13,6 @@ if(isset($_POST['enviar'])){
         echo "Imagem não foi enviada.";
     }
 }
-
 // Editar
 include_once("../classe/AlterarSubCategoria.php");
 
@@ -48,41 +47,69 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idSub
                 <button type="button" class="btn btn-dark fw-medium" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Adicionar
                 </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header border-0">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo
-                                    item</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="index.php?tela=cadListarSubCategoria" method="post" >
-                                <div class="modal-body">
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="text" name="nome" class="input border-0 py-1" placeholder="Nome" required>
-                                    </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="text" name="descricao" class="input border-0 py-1" placeholder="Descrição" required>
-                                    </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <select name="situacao" class="form-select border-0" required>
-                                            <option value='ATIVO'>ATIVO</option>
-                                            <option value='DESATIVO'>DESATIVO</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="modal-footer border-0">
-                                    <button type="submit" name="enviar" class="btn btn-dark form-control fw-medium">Adicionar</button>
-                                </div>
-                            </form>
-                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Mostrar dados -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col table-responsive">
+                <?php
+                    include_once("../classe/MostrarSubCategoria.php");
+                    $subCategorias = new MostrarSubCategoria();
+                    $subCategorias->setNumPagina(@$_GET['pg']);
+                    $subCategorias->setUrl("?tela=cadListarSubCategoria");
+                    $subCategorias->setSessao('');
+                    $subCategorias->mostrarSubCategoria();
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Paginação -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex flex-column align-items-center">
+                <ul class="nav d-flex">
+                    <li><?php $subCategorias->geraNumeros();?></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal de Cadastro -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo
+                    item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <form action="index.php?tela=cadListarSubCategoria" method="post" >
+                <div class="modal-body">
+                    <div class="text-start border px-1 py-1 mb-1">
+                        <input type="text" name="nome" class="input border-0 py-1" placeholder="Nome" required>
+                    </div>
+                    <div class="text-start border px-1 py-1 mb-1">
+                        <input type="text" name="descricao" class="input border-0 py-1" placeholder="Descrição" required>
+                    </div>
+                    <div class="text-start border px-1 py-1 mb-1">
+                        <select name="situacao" class="form-select border-0" required>
+                            <option value='ATIVO'>ATIVO</option>
+                            <option value='DESATIVO'>DESATIVO</option>
+                        </select>
                     </div>
                 </div>
-            </div>
+                <div class="modal-footer border-0">
+                    <button type="submit" name="enviar" class="btn btn-dark form-control fw-medium">Adicionar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -120,24 +147,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idSub
         </div>
     </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Preenchimento do modal de edição
-    document.querySelectorAll('.bi-pencil').forEach(button => {
-        button.addEventListener('click', function () {
-            // Utiliza os atributos data- para preencher os campos
-            document.getElementById('editIdSubCategoria').value = this.dataset.id;
-            document.getElementById('editNomeSubCategoria').value = this.dataset.nome;
-            document.getElementById('editDescricaoSubCategoria').value = this.dataset.descricao;
-            document.getElementById('editSituacaoSubCategoria').value = this.dataset.situacao;
-
-            const modal = new bootstrap.Modal(document.getElementById('editSubCategoryModal'));
-            modal.show();
-        });
-    });
-});
-</script>
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -157,9 +166,20 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </div>
 
-<!-- Script para confirmar e processar exclusão -->
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('.bi-pencil').forEach(button => {
+        button.addEventListener('click', function () {
+            // Utiliza os atributos data- para preencher os campos
+            document.getElementById('editIdSubCategoria').value = this.dataset.id;
+            document.getElementById('editNomeSubCategoria').value = this.dataset.nome;
+            document.getElementById('editDescricaoSubCategoria').value = this.dataset.descricao;
+            document.getElementById('editSituacaoSubCategoria').value = this.dataset.situacao;
+
+            const modal = new bootstrap.Modal(document.getElementById('editSubCategoryModal'));
+            modal.show();
+        });
+    });
     document.querySelectorAll('.bi-trash').forEach(button => {
         button.addEventListener('click', function () {
             const deleteId = this.dataset.id;
@@ -171,32 +191,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 </script>
-<!-- Mostrar dados -->
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col table-responsive">
-                <?php
-                    include_once("../classe/MostrarSubCategoria.php");
-                    $subCategorias = new MostrarSubCategoria();
-                    $subCategorias->setNumPagina(@$_GET['pg']);
-                    $subCategorias->setUrl("?tela=cadListarSubCategoria");
-                    $subCategorias->setSessao('');
-                    $subCategorias->mostrarSubCategoria();
-                ?>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Paginação -->
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col d-flex flex-column align-items-center">
-                <ul class="nav d-flex">
-                    <li><?php $subCategorias->geraNumeros();?></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>

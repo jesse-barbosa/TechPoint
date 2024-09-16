@@ -9,7 +9,7 @@ class AdicionarBanner extends MinhaConexao {
 
     public function adicionarBanner($idImage, $situacao) {
         // Verificar se já existe um banner com a mesma imagem
-        $sqlVerificacao = "SELECT COUNT(*) FROM banners WHERE idImage = ?";
+        $sqlVerificacao = "SELECT COUNT(*) FROM banners WHERE (idImage = ? AND deletedBanner = 0)";
         $stmtVerificacao = $this->getConnection()->prepare($sqlVerificacao);
         $stmtVerificacao->bind_param("i", $idImage);
         $stmtVerificacao->execute();
@@ -27,7 +27,8 @@ class AdicionarBanner extends MinhaConexao {
         $stmt = $this->getConnection()->prepare($sql);
         $stmt->bind_param("is", $idImage, $situacao);
         if ($stmt->execute()) {
-            echo "Banner adicionado com sucesso!";
+            echo "<script>alert('Banner adicionado com sucesso!');window.location.href = 'index.php?tela=cadListarBanners'</script>";
+
         } else {
             echo "Erro ao adicionar banner: " . $stmt->error;
         }

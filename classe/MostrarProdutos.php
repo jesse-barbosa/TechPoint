@@ -59,7 +59,7 @@ class MostrarProdutos extends criaPaginacao {
                                     <img src='" . htmlspecialchars($imagemProduto) . "' class='p-1 card-img-top' height='220' alt='Foto Produto'>
                                     <div class='card-body'>
                                         <h5 class='card-title fw-bold'>" . htmlspecialchars($resultado['nameProduct']) . "</h5>    
-                                        <h5 class='card-title text-success fw-bold'>R$" . htmlspecialchars(number_format($resultado['priceProduct'], 2, ',', '.')) . "</h5>    
+                                        <h5 class='card-title text-success fw-lighter'>R$" . htmlspecialchars(number_format($resultado['priceProduct'], 2, ',', '.')) . "</h5>    
                                     </div>
                                 </div>
                             </a>

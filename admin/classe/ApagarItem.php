@@ -24,6 +24,9 @@ class ApagarItem extends MinhaConexao {
                 case 'Contato':
                     $sql = "DELETE FROM contacts WHERE idContact = ?";
                     break;
+                case 'Imagem':
+                    $sql = "DELETE FROM images WHERE idImage = ?";
+                    break;
                 default:
                     throw new Exception("Tipo de item inválido.");
             }

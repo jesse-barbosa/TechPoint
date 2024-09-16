@@ -1,5 +1,10 @@
 <ul class="nav flex-column">
     <!-- Itens de controle -->
+    <a class="d-none d-md-inline-block link-underline link-underline-opacity-0 link-light link-opacity-75-hover"
+            aria-current="page" href="?tela=home"><li class="nav-item bg-secondary py-2 ps-2">
+        <i class="bi bi-house"></i>
+            Início
+    </li></a>
     <div class="d-none d-md-inline-block text-start my-2 text-light fs-5 text-center lead">Cadastros
     </div>
     <a class="d-none d-md-inline-block link-underline link-underline-opacity-0 link-light link-opacity-75-hover"

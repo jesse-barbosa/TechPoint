@@ -8,7 +8,7 @@ class AlterarImagem extends MinhaConexao {
             if ($imagem && isset($imagem['error']) && $imagem['error'] === UPLOAD_ERR_OK) {
                 // Faz o upload da imagem
                 $upload = new UploadImagem();
-                $upload->upload($imagem, "products");
+                $upload->upload($imagem, "$tipoImagem");
                 $caminhoImagem = $upload->getNovoDiretorio();
                 
                 // Atualiza a imagem e a situação no banco de dados

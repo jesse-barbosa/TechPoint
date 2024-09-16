@@ -56,7 +56,7 @@ class MostrarImagens extends CriaPaginacao {
                     echo "<td class='fw-lighter'>" . $resultado['idImage'] . "</td>";
                     echo "<td class='fw-lighter'>" . $resultado['nameImage'] . "</td>";
                     echo "<td class='fw-lighter'>" . $resultado['typeImage'] . "</td>";
-                    echo "<td class='fw-lighter'>" . $resultado['urlImage'] . "</td>";
+                    echo "<td class='fw-lighter'><img src='" . htmlspecialchars($resultado['urlImage']) . "' alt='" . htmlspecialchars($resultado['nameImage']) . "' width='100'></td>";
                     echo "<td class='fw-lighter'>" . $resultado['statusImage'] . "</td>";
                     echo "<td><a href='#' class='bi bi-pencil btn btn-outline-dark' data-bs-toggle='modal' data-bs-target='#editImageModal' data-id='" . $resultado['idImage'] . "' data-name='" . $resultado['nameImage'] . "' data-type='" . $resultado['typeImage'] . "' data-url='" . $resultado['urlImage'] . "' data-status='" . $resultado['statusImage'] . "'></a></td>";
                     echo "<td><i class='bi bi-trash btn btn-dark' data-id='" . $resultado['idImage'] . "'></i></td>";

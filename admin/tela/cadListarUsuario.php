@@ -14,13 +14,8 @@ if (isset($_POST['enviar'])) {
     $typeUser = $_POST['typeUser'];
     $situacao = $_POST['situacao'];
 
-    if (isset($_FILES['url']) && $_FILES['url']['error'] == 0) {
-        $icone = $_FILES['url'];
-        $usuario = new Usuario();
-        $usuario->adicionarUsuario($nome, $email, $senha, $icone, $typeUser, $situacao);
-    } else {
-        echo "<script>alert('Arquivo não foi enviado.');</script>";
-    }
+    $usuario = new Usuario();
+    $usuario->adicionarUsuario($nome, $email, $senha, $typeUser, $situacao);
 }
 // Editar
 include_once("../classe/AlterarUsuario.php");
@@ -62,59 +57,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idUsu
                 <button type="button" class="btn btn-dark fw-medium" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Adicionar
                 </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo
-                                    item</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="index.php?tela=cadListarUsuario" method="post" enctype="multipart/form-data">
-                            <div class="modal-body text-start">
-                                <div class="mb-3">
-                                    <label for="nomeUsuario" class="form-label">Nome</label>
-                                    <input type="text" class="form-control" id="nomeUsuario" name="nome" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="emailUsuario" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="emailUsuario" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="senhaUsuario" class="form-label">Senha</label>
-                                    <input type="password" class="form-control" id="senhaUsuario" name="senha">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="situacaoUsuario" class="form-label">Situação</label>
-                                    <select class="form-select" id="situacaoUsuario" name="situacao" required>
-                                        <option value='ATIVO'>ATIVO</option>
-                                        <option value='DESATIVO'>DESATIVO</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="typeUser" class="form-label">Tipo</label>
-                                    <select class="form-select" id="typeUser" name="typeUser" required>
-                                        <option value='default'>Default</option>
-                                        <option value='admin'>Admin</option>
-                                        <option value='admin-master'>Admin-Master</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="url" class="form-label">Ícone</label>
-                                    <input type="file" name="url" id="url" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" name="enviar" class="btn btn-dark form-control">Adicionar</button>
-                            </div>
-                        </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -145,6 +87,54 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idUsu
                     <li><?php $usuarios->geraNumeros();?></li>
                 </ul>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Modal de Cadastro -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo
+                    item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <form action="index.php?tela=cadListarUsuario" method="post" enctype="multipart/form-data">
+            <div class="modal-body text-start">
+                <div class="mb-3">
+                    <label for="nomeUsuario" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nomeUsuario" name="nome" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emailUsuario" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="emailUsuario" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="senhaUsuario" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="senhaUsuario" name="senha">
+                </div>
+                <div class="mb-3">
+                    <label for="situacaoUsuario" class="form-label">Situação</label>
+                    <select class="form-select" id="situacaoUsuario" name="situacao" required>
+                        <option value='ATIVO'>ATIVO</option>
+                        <option value='DESATIVO'>DESATIVO</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="typeUser" class="form-label">Tipo</label>
+                    <select class="form-select" id="typeUser" name="typeUser" required>
+                        <option value='default'>Default</option>
+                        <option value='admin'>Admin</option>
+                        <option value='admin-master'>Admin-Master</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="enviar" class="btn btn-dark form-control">Adicionar</button>
+            </div>
+        </form>
         </div>
     </div>
 </div>
@@ -212,6 +202,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idUsu
         </div>
     </div>
 </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
     document.querySelectorAll('.bi-pencil').forEach(button => {

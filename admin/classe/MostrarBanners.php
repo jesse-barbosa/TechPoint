@@ -34,7 +34,7 @@ class MostrarBanners extends CriaPaginacao {
 
     public function mostrarBanners() {
         try {
-            $sql = "SELECT b.idBanner, b.statusBanner, i.nameImage, i.urlImage
+            $sql = "SELECT b.idBanner, b.statusBanner, b.idImage, i.nameImage, i.urlImage
                     FROM banners b
                     JOIN images i ON b.idImage = i.idImage
                     WHERE b.deletedBanner = 0";
@@ -66,7 +66,7 @@ class MostrarBanners extends CriaPaginacao {
                     echo "<td class='fw-lighter'>" . htmlspecialchars($resultado['idBanner']) . "</td>";
                     echo "<td class='fw-lighter'><img src='" . htmlspecialchars($resultado['urlImage']) . "' alt='" . htmlspecialchars($resultado['nameImage']) . "' width='100'></td>";
                     echo "<td class='fw-lighter'>" . htmlspecialchars($resultado['statusBanner']) . "</td>";
-                    echo "<td><a href='#' class='bi bi-pencil btn btn-outline-dark' data-bs-toggle='modal' data-bs-target='#editBannerModal' data-id='" . htmlspecialchars($resultado['idBanner']) . "' data-situacao='" . htmlspecialchars($resultado['statusBanner']) . "' data-url='" . htmlspecialchars($resultado['urlImage']) . "'></a></td>";
+                    echo "<td><a href='#' class='bi bi-pencil btn btn-outline-dark' data-bs-toggle='modal' data-bs-target='#editBannerModal' data-id='" . htmlspecialchars($resultado['idBanner']) . "' data-situacao='" . htmlspecialchars($resultado['statusBanner']) . "' data-url='" . htmlspecialchars($resultado['urlImage']) . "' data-idimage='" . htmlspecialchars($resultado['idImage']) . "'></a></td>";
                     echo "<td><i class='bi bi-trash btn btn-dark' data-id='" . htmlspecialchars($resultado['idBanner']) . "'></i></td>";
                     echo "</tr>";
                 }

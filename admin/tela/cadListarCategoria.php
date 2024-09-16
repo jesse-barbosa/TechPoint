@@ -16,13 +16,14 @@ if(isset($_POST['enviar'])){
     }
 }
 // Editar
+include_once("../classe/AlterarCategoria.php");
+
 if (isset($_POST['editar'])) {
     $idCategoria = $_POST['idCategoria'];
     $nome = $_POST['nome'];
     $descricao = $_POST['descricao'];
     $situacao = $_POST['situacao'];
 
-    include_once("../classe/AlterarCategoria.php");
     $categoria = new AlterarCategoria();
     $categoria->alterarCategoria($idCategoria, $nome, $descricao, $situacao);
 }
@@ -48,39 +49,69 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idCat
                 <button type="button" class="btn btn-dark fw-medium" data-bs-toggle="modal" data-bs-target="#staticBackdropAdC">
                     Adicionar
                 </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdropAdC" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header border-0">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo item</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form action="index.php?tela=cadListarCategoria" method="post">
-                                <div class="modal-body">
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="text" name="nome" class="input border-0 py-1" placeholder="Nome" required>
-                                    </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <input type="text" name="descricao" class="input border-0 py-1" placeholder="Descrição" required>
-                                    </div>
-                                    <div class="text-start border px-1 py-1 mb-1">
-                                        <select name="situacao" class="form-select border-0" required>
-                                            <option value='ATIVO'>ATIVO</option>
-                                            <option value='DESATIVO'>DESATIVO</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="modal-footer border-0">
-                                    <button type="submit" name="enviar" class="btn btn-dark form-control fw-medium">Adicionar</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Mostrar dados -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <?php
+                        include_once("../classe/MostrarCategorias.php");
+                        $categorias = new MostrarCategorias();
+                        $categorias->setNumPagina(@$_GET['pg']);
+                        $categorias->setUrl("?tela=cadListarCategoria");
+                        $categorias->setSessao('');
+                        $categorias->mostrarCategoria();
+                    ?>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Paginação -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex flex-column align-items-center">
+                <ul class="nav d-flex">
+                    <li><?php $categorias->geraNumeros();?></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal de Cadastro -->
+<div class="modal fade" id="staticBackdropAdC" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar novo item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="index.php?tela=cadListarCategoria" method="post">
+                <div class="modal-body">
+                    <div class="text-start border px-1 py-1 mb-1">
+                        <input type="text" name="nome" class="input border-0 py-1" placeholder="Nome" required>
+                    </div>
+                    <div class="text-start border px-1 py-1 mb-1">
+                        <input type="text" name="descricao" class="input border-0 py-1" placeholder="Descrição" required>
+                    </div>
+                    <div class="text-start border px-1 py-1 mb-1">
+                        <select name="situacao" class="form-select border-0" required>
+                            <option value='ATIVO'>ATIVO</option>
+                            <option value='DESATIVO'>DESATIVO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="submit" name="enviar" class="btn btn-dark form-control fw-medium">Adicionar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -118,24 +149,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idCat
         </div>
     </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Preenchimento do modal de edição
-    document.querySelectorAll('.bi-pencil').forEach(button => {
-        button.addEventListener('click', function () {
-            // Utiliza os atributos data- para preencher os campos
-            document.getElementById('editIdCategoria').value = this.dataset.id;
-            document.getElementById('editNomeCategoria').value = this.dataset.nome;
-            document.getElementById('editDescricaoCategoria').value = this.dataset.descricao;
-            document.getElementById('editSituacaoCategoria').value = this.dataset.situacao;
-
-            const modal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
-            modal.show();
-        });
-    });
-});
-</script>
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -155,10 +168,20 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </div>
 
-<!-- Script para confirmar e processar exclusão -->
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
-    
+    document.querySelectorAll('.bi-pencil').forEach(button => {
+        button.addEventListener('click', function () {
+            // Utiliza os atributos data- para preencher os campos
+            document.getElementById('editIdCategoria').value = this.dataset.id;
+            document.getElementById('editNomeCategoria').value = this.dataset.nome;
+            document.getElementById('editDescricaoCategoria').value = this.dataset.descricao;
+            document.getElementById('editSituacaoCategoria').value = this.dataset.situacao;
+
+            const modal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
+            modal.show();
+        });
+    });
     document.querySelectorAll('.bi-trash').forEach(button => {
         button.addEventListener('click', function () {
             const deleteId = this.dataset.id;
@@ -170,37 +193,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 </script>
-
-
-<!-- Mostrar dados -->
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="table-responsive">
-                    <?php
-                        include_once("../classe/MostrarCategorias.php");
-                        $categorias = new MostrarCategorias();
-                        $categorias->setNumPagina(@$_GET['pg']);
-                        $categorias->setUrl("?tela=cadListarCategoria");
-                        $categorias->setSessao('');
-                        $categorias->mostrarCategoria();
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Paginação -->
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col d-flex flex-column align-items-center">
-                <ul class="nav d-flex">
-                    <li><?php $categorias->geraNumeros();?></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>

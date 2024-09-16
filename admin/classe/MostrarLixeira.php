@@ -31,11 +31,15 @@ class MostrarLixeira extends CriaPaginacao {
             $sqlProdutos = "SELECT idProduct AS id, nameProduct AS name, descProduct AS description, 'Produto' AS tipo FROM products WHERE deletedProduct = 1";
             $sqlCategorias = "SELECT idCategory AS id, nameCategory AS name, descCategory AS description, 'Categoria' AS tipo FROM categories WHERE deletedCategory = 1";
             $sqlSubcategorias = "SELECT idSubcategory AS id, nameSubCategory AS name, descSubcategory AS description, 'Sub Categoria' AS tipo FROM subcategories WHERE deletedSubcategory = 1";
-            $sqlBanners = "SELECT idBanner AS id, idImage AS name, '' AS description, 'Banner' AS tipo FROM banners WHERE deletedBanner = 1";
+            $sqlBanners = "SELECT b.idBanner AS id, i.urlImage AS name, '' AS description, 'Banner' AS tipo
+               FROM banners b
+               JOIN images i ON b.idImage = i.idImage
+               WHERE b.deletedBanner = 1";
             $sqlUsuarios = "SELECT idUser AS id, nameUser AS name, emailUser AS description, 'Usuário' AS tipo FROM users WHERE deletedUser = 1";
             $sqlContatos = "SELECT idContact AS id, nameContact AS name, subjectContact AS description, 'Contato' AS tipo FROM contacts WHERE deletedContact = 1";
+            $sqlImagens = "SELECT idImage AS id, urlImage AS name, '' AS description, 'Imagem' AS tipo FROM images WHERE deletedImage = 1";
 
-            $sql = "($sqlProdutos) UNION ALL ($sqlCategorias) UNION ALL ($sqlSubcategorias) UNION ALL ($sqlBanners) UNION ALL ($sqlUsuarios) UNION ALL ($sqlContatos)";
+            $sql = "($sqlProdutos) UNION ALL ($sqlCategorias) UNION ALL ($sqlSubcategorias) UNION ALL ($sqlBanners) UNION ALL ($sqlUsuarios) UNION ALL ($sqlContatos) UNION ALL ($sqlImagens)";
 
             $this->setParametro($this->strNumPagina);
             $this->setFileName($this->strUrl);
@@ -63,17 +67,24 @@ class MostrarLixeira extends CriaPaginacao {
                     </thead>
                     <tbody>
                 ";
-
                 foreach ($result as $item) {
                     $contador++;
                     echo "<tr class='text-center'>";
                     echo "<td class='fw-lighter'>{$item['id']}</td>";
-                    echo "<td class='fw-lighter'>{$item['name']}</td>";
+                
+                    if ($item['tipo'] == 'Banner' || $item['tipo'] == 'Imagem') {
+                        echo "<td class='fw-lighter'><img src='{$item['name']}' alt='{$item['tipo']}' style='width: 100px;'></td>";
+                    } else {
+                        echo "<td class='fw-lighter'>{$item['name']}</td>";
+                    }
+                
                     echo "<td class='fw-lighter'>{$item['description']}</td>";
                     echo "<td class='fw-lighter'>{$item['tipo']}</td>";
                     echo "<td><button class='btn btn-outline-dark mx-1' data-id='{$item['id']}' data-tipo='{$item['tipo']}' data-action='restore' data-bs-toggle='modal' data-bs-target='#restoreConfirmationModal'><i class='bi bi-arrow-counterclockwise'></i></button></td>";
                     echo "<td><button class='btn btn-dark mx-1' data-id='{$item['id']}' data-tipo='{$item['tipo']}' data-action='delete' data-bs-toggle='modal' data-bs-target='#deleteConfirmationModal'><i class='bi bi-trash'></i></button></td>";
-                }
+                    echo "</tr>";
+                }                
+                
                 echo "
                     </tbody>
                 </table>

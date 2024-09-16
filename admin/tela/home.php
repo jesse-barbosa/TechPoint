@@ -1,21 +1,11 @@
 <style>
-        .welcome-card {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            padding: 1.5rem;
-        }
         .card {
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s;
         }
         .card:hover {
             transform: scale(1.05);
-        }
-        .card-body {
-            background: #1c1c1c;
-            color: #fff;
         }
         .card-body i {
             color: #4caf50;
@@ -27,15 +17,15 @@
             font-weight: 300;
         }
     </style>
-    <div class="container m-3">
+    <div class="container mt-3">
         <div class="row">
-            <div class="col-md-9">
-                <div class="welcome-card">
-                    <h1 class="fw-lighter text-light" id="welcome-message"></h1>
+            <div class="col-md-10">
+                <div>
+                    <h1 class="fw-lighter" id="welcome-message"></h1>
                 </div>
             </div>
             <div class="col-md-2 text-center">
-                <div class="py-2 px-1 bg-dark rounded text-light" id="date-time"></div>
+                <div class="py-2 bg-dark rounded text-light" id="date-time"></div>
             </div>
         </div>
     </div>
@@ -66,7 +56,7 @@
             document.getElementById('date-time').innerText = `${formatDateTime()}`;
         }, 60000);
     </script>
-
+    <hr class="mt-4">
     <div class="container-fluid mt-5">
         <div class="row">
             <h3 class="fw-semibold mb-4">Total Registros</h3>

@@ -11,7 +11,7 @@
                     <li><a href="index.php" class="text-secondary text-decoration-none">Página inicial</a></li>
                     <li><a href="about.php" class="text-secondary text-decoration-none">Sobre Nós</a></li>
                     <li><a href="contact.php" class="text-secondary text-decoration-none">Contato</a></li>
-                    <li><a href="admin/.php" class="text-secondary text-decoration-none">Dashboard</a></li>
+                    <li><a href="../admin/" class="text-secondary text-decoration-none">Dashboard</a></li>
                 </ul>
             </div>
 

@@ -6,7 +6,6 @@ if (!isset($_SESSION['typeUser']) || $_SESSION['typeUser'] !== 'admin-master') {
 }
 
 include_once("../classe/ApagarItem.php");
-include_once("../classe/RestaurarItem.php");
 
 // Verificar se a ação de exclusão foi solicitada
 if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idItem']) && isset($_GET['tipo'])) {
@@ -16,6 +15,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['idIte
     $apagarItem->apagarItem($idItem, $tipoItem);
     header("Location: index.php?tela=listarLixeira"); // Redirecionar após exclusão
 }
+
+include_once("../classe/RestaurarItem.php");
 
 // Verificar se a ação de restauração foi solicitada
 if (isset($_GET['action']) && $_GET['action'] === 'restore' && isset($_GET['idItem']) && isset($_GET['tipo'])) {
@@ -35,7 +36,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'restore' && isset($_GET['idIt
                 <div class="lead fs-3">Itens Excluídos</div>
             </div>
             <div class="col-3 text-end">
-                <!-- Aqui você pode adicionar um botão para outras funcionalidades, se necessário -->
             </div>
         </div>
     </div>
@@ -87,7 +87,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'restore' && isset($_GET['idIt
         </div>
     </div>
 </div>
-
 <!-- Modal de Confirmação de Restauração -->
 <div class="modal fade" id="restoreConfirmationModal" tabindex="-1" aria-labelledby="restoreConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
