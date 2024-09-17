@@ -16,7 +16,7 @@ if(isset($_SESSION['nome']) and isset($_SESSION['senha'])){
 <body>
     <div class="container-fluid">
         <div class="row d-flex flex-row">
-            <div class="col-1 col-md-2 bg-danger p-0">
+            <div class="col-1 col-md-2 bg-dark p-0">
                 <?php include_once("../include/fotoUser.php"); ?>
                 <?php include_once("../include/menu.php");?>
             </div>

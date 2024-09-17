@@ -1,4 +1,4 @@
-<div class="col bg-warning">
+<div class="col">
     <div class="d-flex flex-row text-center">
     
         <?php
