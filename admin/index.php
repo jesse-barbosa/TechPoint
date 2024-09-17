@@ -64,13 +64,11 @@
                     if (empty($_POST["nome"]) || empty($_POST["senha"])) {
                         echo "<div class='alert alert-warning mt-3' role='alert'>Por favor, preencha todos os campos.</div>";
                     } else {
-                        echo "<div class='alert alert-danger mt-3' role='alert'>";
                         include_once("classe/VerificarLogin.php");
                         $dados = new VerificarLogin();
                         $dados->retornarNome($_POST["nome"]);
                         $dados->retornarSenha($_POST["senha"]);
                         $dados->verificarLogin();
-                        echo "</div>";
                     }
                 }
                 ?>
