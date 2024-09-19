@@ -158,9 +158,9 @@ class criaPaginacao extends MinhaConexao //Indicar o arquivo que será herdado
 	
 				// Página atual
 				if ($this->pagAtual == $this->lnk_impressos) {
-					echo "<li class='page-item active' aria-current='page'><span class='page-link rounded-circle'>$this->lnk_impressos</span></li>";
+					echo "<li class='page-item active' aria-current='page'><span class='page-link rounded-circle mx-1'>$this->lnk_impressos</span></li>";
 				} else {
-					echo "<li class='page-item'><a href=\"$this->fileName&pg=$this->lnk_impressos\" class='page-link rounded-circle mx-3' title=\"$this->lnk_impressos\">$this->lnk_impressos</a></li>";
+					echo "<li class='page-item'><a href=\"$this->fileName&pg=$this->lnk_impressos\" class='page-link rounded-circle mx-1' title=\"$this->lnk_impressos\">$this->lnk_impressos</a></li>";
 				}
 			}
 	

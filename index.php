@@ -50,13 +50,11 @@ body {
                             if(empty($_POST["nome"]) || empty($_POST["senha"])){
                                 echo "";
                             }else if(isset($_POST["enviar"])){
-                                echo "<div class='alert alert-danger my-3'>";
                                 include_once("classe/VerificarLogin.php");
                                 $dados = new VerificarLogin();
                                 $dados->retornarNome($_POST["nome"]);
                                 $dados->retornarSenha($_POST["senha"]);
                                 $dados->verificarLogin();
-                                echo "</div>";
                             }
                         ?>
                     </form>

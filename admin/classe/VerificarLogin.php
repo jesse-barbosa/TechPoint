@@ -52,7 +52,7 @@ class VerificarLogin extends Minhaconexao
         /**** Verifica se o foi encontrado o usuário, ou seja, se dados foram digitados corretamente *****/
         }else if($dados <= 0){
             /***** Exibe mensagem onde onde os dados são inválidos *****/
-            echo $this->erro = "Email ou senha inválidos! <br>Entre em contato com o administrador do sistema!";
+            echo $this->erro = "<div class='alert alert-danger mt-3'>Email ou senha inválidos.</div>";
             /**** Verifica se foi encontrado registro no banco *****/
         }else if($dados == 1){
             /**** Se encontrar resultado no banco, irá iniciar a sessão *****/

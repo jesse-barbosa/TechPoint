@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16-Set-2024 às 15:53
+-- Tempo de geração: 18/09/2024 às 00:58
 -- Versão do servidor: 10.4.32-MariaDB
--- versão do PHP: 8.2.12
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `banners`
+-- Estrutura para tabela `banners`
 --
 
 CREATE TABLE `banners` (
@@ -35,7 +35,7 @@ CREATE TABLE `banners` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `banners`
+-- Despejando dados para a tabela `banners`
 --
 
 INSERT INTO `banners` (`idBanner`, `idImage`, `statusBanner`, `deletedBanner`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `banners` (`idBanner`, `idImage`, `statusBanner`, `deletedBanner`) V
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cart`
+-- Estrutura para tabela `cart`
 --
 
 CREATE TABLE `cart` (
@@ -56,10 +56,17 @@ CREATE TABLE `cart` (
   `added_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
+--
+-- Despejando dados para a tabela `cart`
+--
+
+INSERT INTO `cart` (`idCart`, `user_id`, `product_id`, `quantProducts`, `added_at`) VALUES
+(1, 18, 8, 1, '2024-09-17 22:52:12');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `categories`
+-- Estrutura para tabela `categories`
 --
 
 CREATE TABLE `categories` (
@@ -71,7 +78,7 @@ CREATE TABLE `categories` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `categories`
+-- Despejando dados para a tabela `categories`
 --
 
 INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusCategory`, `deletedCategory`) VALUES
@@ -81,7 +88,6 @@ INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusC
 (4, 'Armazenamento', 'Dispositivos de armazenamento como HDs e SSDs', 'ATIVO', 0),
 (5, 'Placas de Video', 'Unidades de processamento gráfico (GPU)', 'ATIVO', 0),
 (6, 'Periféricos', 'Dispositivos como teclados, mouses e headsets', 'ATIVO', 0),
-(7, 'Xeon', 'Processadores da Xeon', 'ATIVO', 1),
 (8, 'Placas de Som', 'Dispositivos de processamento de áudio', 'ATIVO', 0),
 (9, 'Coolers', 'Sistemas de resfriamento para computadores', 'ATIVO', 0),
 (10, 'Monitores', 'Tela que exibe informações visuais de forma gráfica', 'ATIVO', 0);
@@ -89,7 +95,7 @@ INSERT INTO `categories` (`idCategory`, `nameCategory`, `descCategory`, `statusC
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contacts`
+-- Estrutura para tabela `contacts`
 --
 
 CREATE TABLE `contacts` (
@@ -104,7 +110,7 @@ CREATE TABLE `contacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci COMMENT='Tabela para salvar mensagens dos usuários.';
 
 --
--- Extraindo dados da tabela `contacts`
+-- Despejando dados para a tabela `contacts`
 --
 
 INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact`, `stateContact`, `subjectContact`, `messageContact`, `deletedContact`) VALUES
@@ -128,7 +134,7 @@ INSERT INTO `contacts` (`idContact`, `nameContact`, `emailContact`, `cityContact
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `images`
+-- Estrutura para tabela `images`
 --
 
 CREATE TABLE `images` (
@@ -141,7 +147,7 @@ CREATE TABLE `images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `images`
+-- Despejando dados para a tabela `images`
 --
 
 INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `statusImage`, `deletedImage`) VALUES
@@ -156,11 +162,9 @@ INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `statusIm
 (9, 'Placa-Mãe MSI ATX', '/TechPoint/img/products/Placa_Mãe_MSI_ATX.jpg', 'products', 'ATIVO', 0),
 (10, 'Gabinete NZXT H510', '/TechPoint/img/products/Gabinet_ NZXT_H510.jpg', 'products', 'ATIVO', 0),
 (11, 'Fonte Corsair 750W', '/TechPoint/img/products/Fonte_Corsair_750W.jpg', 'products', 'ATIVO', 0),
-(12, 'Memória Crucial 16GB', '/TechPoint/img/products/Memória Crucial 16GB.jpg', 'products', 'ATIVO', 1),
 (13, 'Memória Crucial 16GB', '/TechPoint/img/products/Memória_Crucial_16GB.jpg', 'products', 'ATIVO', 0),
 (14, 'Memória Corsair 32GB', '/TechPoint/img/products/Memória_Corsair_32GB.jpg', 'products', 'ATIVO', 0),
 (15, 'Water Cooler NZXT Kraken', '/TechPoint/img/products/Water_Cooler_NZXT_Kraken.jpg', 'products', 'ATIVO', 0),
-(16, 'Cooler Master Hyper 212', '/TechPoint/img/products/Water_Cooler_NZXT_Kraken.jpg', 'products', 'ATIVO', 1),
 (17, 'Cooler Master Hyper 212', '/TechPoint/img/products/Cooler_Master_Hyper_212.jpg', 'products', 'ATIVO', 0),
 (18, 'Mouse Razer DeathAdder', '/TechPoint/img/products/Mouse_Razer_DeathAdder.jpg', 'products', 'ATIVO', 0),
 (19, 'Teclado Razer BlackWidow', '/TechPoint/img/products/Teclado_Razer_BlackWidow.jpg', 'products', 'ATIVO', 0),
@@ -179,7 +183,7 @@ INSERT INTO `images` (`idImage`, `nameImage`, `urlImage`, `typeImage`, `statusIm
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `products`
+-- Estrutura para tabela `products`
 --
 
 CREATE TABLE `products` (
@@ -197,7 +201,7 @@ CREATE TABLE `products` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `products`
+-- Despejando dados para a tabela `products`
 --
 
 INSERT INTO `products` (`idProduct`, `nameProduct`, `idImage`, `descProduct`, `quantProduct`, `quantSoldProduct`, `priceProduct`, `idCategory`, `idSubCategory`, `statusProduct`, `deletedProduct`) VALUES
@@ -227,12 +231,12 @@ INSERT INTO `products` (`idProduct`, `nameProduct`, `idImage`, `descProduct`, `q
 (27, 'Gabinete NZXT H510', 10, 'Gabinete NZXT H510 Mid Tower com painel de vidro temperado', 10, 0, 500, 2, 3, 'ATIVO', 0),
 (28, 'Cooler Master Hyper 212', 17, 'Cooler para CPU Cooler Master Hyper 212 com 4 heatpipes', 40, 0, 150, 4, 6, 'ATIVO', 0),
 (7, 'Fonte Corsair 750W', 11, 'Fonte de alimentação Corsair com 750W de potência e certificação 80 Plus Gold', 15, 0, 550, 2, 4, 'ATIVO', 0),
-(271, 'AOC GH100', 30, '0', 56, 0, 149, 6, 10, 'ATIVO', 0);
+(271, 'AOC GH100', 30, 'Headset HyperX Cloud II com som surround 7.1 e microfone embutido', 56, 0, 149, 6, 10, 'ATIVO', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `subcategories`
+-- Estrutura para tabela `subcategories`
 --
 
 CREATE TABLE `subcategories` (
@@ -244,7 +248,7 @@ CREATE TABLE `subcategories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `subcategories`
+-- Despejando dados para a tabela `subcategories`
 --
 
 INSERT INTO `subcategories` (`idSubCategory`, `nameSubCategory`, `descSubCategory`, `statusSubCategory`, `deletedSubCategory`) VALUES
@@ -265,7 +269,7 @@ INSERT INTO `subcategories` (`idSubCategory`, `nameSubCategory`, `descSubCategor
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `users`
+-- Estrutura para tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -279,7 +283,7 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
--- Extraindo dados da tabela `users`
+-- Despejando dados para a tabela `users`
 --
 
 INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `statusUser`, `typeUser`, `deletedUser`) VALUES
@@ -307,13 +311,13 @@ INSERT INTO `users` (`idUser`, `nameUser`, `emailUser`, `passwordUser`, `statusU
 --
 
 --
--- Índices para tabela `banners`
+-- Índices de tabela `banners`
 --
 ALTER TABLE `banners`
   ADD PRIMARY KEY (`idBanner`);
 
 --
--- Índices para tabela `cart`
+-- Índices de tabela `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`idCart`),
@@ -321,43 +325,43 @@ ALTER TABLE `cart`
   ADD KEY `product_id` (`product_id`);
 
 --
--- Índices para tabela `categories`
+-- Índices de tabela `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`idCategory`);
 
 --
--- Índices para tabela `contacts`
+-- Índices de tabela `contacts`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`idContact`);
 
 --
--- Índices para tabela `images`
+-- Índices de tabela `images`
 --
 ALTER TABLE `images`
   ADD PRIMARY KEY (`idImage`);
 
 --
--- Índices para tabela `products`
+-- Índices de tabela `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`idProduct`);
 
 --
--- Índices para tabela `subcategories`
+-- Índices de tabela `subcategories`
 --
 ALTER TABLE `subcategories`
   ADD PRIMARY KEY (`idSubCategory`);
 
 --
--- Índices para tabela `users`
+-- Índices de tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`idUser`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
@@ -370,7 +374,7 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT de tabela `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `categories`

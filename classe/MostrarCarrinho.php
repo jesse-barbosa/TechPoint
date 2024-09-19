@@ -17,11 +17,12 @@ class MostrarCarrinho extends MinhaConexao {
 
         try {
             // Consulta os produtos no carrinho do usuário
-            $sql = "SELECT *
+            $sql = "SELECT p.idProduct, p.nameProduct, p.priceProduct, i.urlImage, c.quantProducts, c.product_id
                     FROM cart c
                     INNER JOIN products p ON c.product_id = p.idProduct
+                    INNER JOIN images i ON p.idImage = i.idImage
                     WHERE c.user_id = ?";
-            
+
             $stmt = $this->conectar->prepare($sql);
             $stmt->bind_param("i", $usuario_id);
             $stmt->execute();
@@ -53,7 +54,7 @@ class MostrarCarrinho extends MinhaConexao {
                 $totalGeral = 0;
                 while ($row = $result->fetch_assoc()) {
                     $nome = $row['nameProduct'];
-                    $image = $row['imageProduct'];
+                    $image = $row['urlImage'];
                     $preco = $row['priceProduct'];
                     $quantidade = $row['quantProducts'];
                     $total = $preco * $quantidade;

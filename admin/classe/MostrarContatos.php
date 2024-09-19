@@ -24,7 +24,7 @@ class MostrarContato extends criaPaginacao {
             $sql = "SELECT * FROM contacts WHERE deletedContact = 0";
             $this->setParametro($this->strNumPagina);
             $this->setFileName($this->strUrl);
-            $this->setInfoMaxPag(6);
+            $this->setInfoMaxPag(9);
             $this->setMaximoLinks(9);
             $this->setSQL($sql);
             self::iniciaPaginacao();
